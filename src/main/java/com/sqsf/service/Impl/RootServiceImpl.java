@@ -1,14 +1,7 @@
 package com.sqsf.service.Impl;
 
-import com.sqsf.entity.RootEntity;
-import com.sqsf.mapper.RootEntityMapper;
 import com.sqsf.service.RootService;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author gzx

@@ -1,13 +1,9 @@
 package com.sqsf;
 
-import com.sqsf.entity.RootEntity;
 import com.sqsf.mapper.RootEntityMapper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-
-import java.util.List;
 
 
 @SpringBootTest
