@@ -2,30 +2,51 @@ package com.sqsf.entity;
 
 import java.util.Date;
 
+/**
+ * 返校信息
+ */
 public class SqFxdataCollection {
-    private Integer id;
+    private Integer id; // 主键
 
-    private String school;
+    private String school; // 学校名
 
-    private String userName;
+    private String userName; // 学生姓名
 
-    private String userNo;
+    private String userNo; // 学号
 
-    private Date fxTime;
+    private Date fxTime; // 返校时间
 
-    private String fxAddrCountry;
+    private String fxAddrCountry; // 返校国家
 
-    private String fxAddrProvince;
+    private String fxAddrProvince; // 返校省份
 
-    private String fxAddrCity;
+    private String fxAddrCity; // 返校城市
 
-    private String fxAddrTown;
+    private String fxAddrTown; // 返校区
 
-    private String fxVehicl;
+    private String fxVehicl; // 返校交通
 
-    private Integer isThseriousarea;
+    private Integer isThseriousarea; // 是否经过疫区
 
-    private Date createTime;
+    private Date createTime; // 创建时间
+
+    public SqFxdataCollection() {
+    }
+
+    public SqFxdataCollection(Integer id, String school, String userName, String userNo, Date fxTime, String fxAddrCountry, String fxAddrProvince, String fxAddrCity, String fxAddrTown, String fxVehicl, Integer isThseriousarea, Date createTime) {
+        this.id = id;
+        this.school = school;
+        this.userName = userName;
+        this.userNo = userNo;
+        this.fxTime = fxTime;
+        this.fxAddrCountry = fxAddrCountry;
+        this.fxAddrProvince = fxAddrProvince;
+        this.fxAddrCity = fxAddrCity;
+        this.fxAddrTown = fxAddrTown;
+        this.fxVehicl = fxVehicl;
+        this.isThseriousarea = isThseriousarea;
+        this.createTime = createTime;
+    }
 
     public Integer getId() {
         return id;
@@ -121,5 +142,23 @@ public class SqFxdataCollection {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "SqFxdataCollection{" +
+                "id=" + id +
+                ", school='" + school + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userNo='" + userNo + '\'' +
+                ", fxTime=" + fxTime +
+                ", fxAddrCountry='" + fxAddrCountry + '\'' +
+                ", fxAddrProvince='" + fxAddrProvince + '\'' +
+                ", fxAddrCity='" + fxAddrCity + '\'' +
+                ", fxAddrTown='" + fxAddrTown + '\'' +
+                ", fxVehicl='" + fxVehicl + '\'' +
+                ", isThseriousarea=" + isThseriousarea +
+                ", createTime=" + createTime +
+                '}';
     }
 }

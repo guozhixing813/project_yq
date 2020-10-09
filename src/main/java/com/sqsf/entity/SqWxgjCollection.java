@@ -3,23 +3,38 @@ package com.sqsf.entity;
 import java.util.Date;
 
 public class SqWxgjCollection {
-    private Integer id;
+    private Integer id; // 主键
 
-    private String school;
+    private String school; // 学校
 
-    private String addr;
+    private String addr; // 地址
 
-    private String userName;
+    private String userName; // 学生姓名
 
-    private Integer userNo;
+    private Integer userNo; // 学号
 
-    private String longitude;
+    private String longitude; // 经度
 
-    private String dimension;
+    private String dimension; // 纬度
 
-    private Date time;
+    private Date time; // 时间
 
-    private String creatTime;
+    private String creatTime; // 创建时间
+
+    public SqWxgjCollection() {
+    }
+
+    public SqWxgjCollection(Integer id, String school, String addr, String userName, Integer userNo, String longitude, String dimension, Date time, String creatTime) {
+        this.id = id;
+        this.school = school;
+        this.addr = addr;
+        this.userName = userName;
+        this.userNo = userNo;
+        this.longitude = longitude;
+        this.dimension = dimension;
+        this.time = time;
+        this.creatTime = creatTime;
+    }
 
     public Integer getId() {
         return id;
@@ -91,5 +106,20 @@ public class SqWxgjCollection {
 
     public void setCreatTime(String creatTime) {
         this.creatTime = creatTime == null ? null : creatTime.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "SqWxgjCollection{" +
+                "id=" + id +
+                ", school='" + school + '\'' +
+                ", addr='" + addr + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userNo=" + userNo +
+                ", longitude='" + longitude + '\'' +
+                ", dimension='" + dimension + '\'' +
+                ", time=" + time +
+                ", creatTime='" + creatTime + '\'' +
+                '}';
     }
 }
