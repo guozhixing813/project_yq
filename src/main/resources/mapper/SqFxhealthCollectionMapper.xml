@@ -1,35 +1,35 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.sqsf.mapper.SqFxhealthCollectionMapper" >
-  <resultMap id="BaseResultMap" type="com.sqsf.entity.SqFxhealthCollection" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="school" property="school" jdbcType="VARCHAR" />
-    <result column="user_name" property="userName" jdbcType="VARCHAR" />
-    <result column="user_no" property="userNo" jdbcType="VARCHAR" />
-    <result column="timestamp" property="timestamp" jdbcType="DATE" />
-    <result column="heathinfo1" property="heathinfo1" jdbcType="VARCHAR" />
-    <result column="heathinfo2" property="heathinfo2" jdbcType="INTEGER" />
-    <result column="heathinfo3" property="heathinfo3" jdbcType="INTEGER" />
-    <result column="is_quarantine" property="isQuarantine" jdbcType="INTEGER" />
-    <result column="notes" property="notes" jdbcType="VARCHAR" />
-    <result column="temperature" property="temperature" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sqsf.mapper.SqFxhealthCollectionMapper">
+  <resultMap id="BaseResultMap" type="com.sqsf.entity.SqFxhealthCollection">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_no" jdbcType="VARCHAR" property="userNo" />
+    <result column="timestamp" jdbcType="DATE" property="timestamp" />
+    <result column="heathinfo1" jdbcType="VARCHAR" property="heathinfo1" />
+    <result column="heathinfo2" jdbcType="INTEGER" property="heathinfo2" />
+    <result column="heathinfo3" jdbcType="INTEGER" property="heathinfo3" />
+    <result column="is_quarantine" jdbcType="INTEGER" property="isQuarantine" />
+    <result column="notes" jdbcType="VARCHAR" property="notes" />
+    <result column="temperature" jdbcType="VARCHAR" property="temperature" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     id, school, user_name, user_no, timestamp, heathinfo1, heathinfo2, heathinfo3, is_quarantine, 
     notes, temperature, create_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from sq_fxhealth_collection
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sq_fxhealth_collection
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.sqsf.entity.SqFxhealthCollection" >
+  <insert id="insert" parameterType="com.sqsf.entity.SqFxhealthCollection">
     insert into sq_fxhealth_collection (id, school, user_name, 
       user_no, timestamp, heathinfo1, 
       heathinfo2, heathinfo3, is_quarantine, 
@@ -41,125 +41,298 @@
       #{notes,jdbcType=VARCHAR}, #{temperature,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.sqsf.entity.SqFxhealthCollection" >
+  <insert id="insertSelective" parameterType="com.sqsf.entity.SqFxhealthCollection">
     insert into sq_fxhealth_collection
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
       </if>
-      <if test="school != null" >
+      <if test="school != null">
         school,
       </if>
-      <if test="userName != null" >
+      <if test="userName != null">
         user_name,
       </if>
-      <if test="userNo != null" >
+      <if test="userNo != null">
         user_no,
       </if>
-      <if test="timestamp != null" >
+      <if test="timestamp != null">
         timestamp,
       </if>
-      <if test="heathinfo1 != null" >
+      <if test="heathinfo1 != null">
         heathinfo1,
       </if>
-      <if test="heathinfo2 != null" >
+      <if test="heathinfo2 != null">
         heathinfo2,
       </if>
-      <if test="heathinfo3 != null" >
+      <if test="heathinfo3 != null">
         heathinfo3,
       </if>
-      <if test="isQuarantine != null" >
+      <if test="isQuarantine != null">
         is_quarantine,
       </if>
-      <if test="notes != null" >
+      <if test="notes != null">
         notes,
       </if>
-      <if test="temperature != null" >
+      <if test="temperature != null">
         temperature,
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         create_time,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="school != null" >
+      <if test="school != null">
         #{school,jdbcType=VARCHAR},
       </if>
-      <if test="userName != null" >
+      <if test="userName != null">
         #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="userNo != null" >
+      <if test="userNo != null">
         #{userNo,jdbcType=VARCHAR},
       </if>
-      <if test="timestamp != null" >
+      <if test="timestamp != null">
         #{timestamp,jdbcType=DATE},
       </if>
-      <if test="heathinfo1 != null" >
+      <if test="heathinfo1 != null">
         #{heathinfo1,jdbcType=VARCHAR},
       </if>
-      <if test="heathinfo2 != null" >
+      <if test="heathinfo2 != null">
         #{heathinfo2,jdbcType=INTEGER},
       </if>
-      <if test="heathinfo3 != null" >
+      <if test="heathinfo3 != null">
         #{heathinfo3,jdbcType=INTEGER},
       </if>
-      <if test="isQuarantine != null" >
+      <if test="isQuarantine != null">
         #{isQuarantine,jdbcType=INTEGER},
       </if>
-      <if test="notes != null" >
+      <if test="notes != null">
         #{notes,jdbcType=VARCHAR},
       </if>
-      <if test="temperature != null" >
+      <if test="temperature != null">
         #{temperature,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.sqsf.entity.SqFxhealthCollection" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.sqsf.entity.SqFxhealthCollection">
     update sq_fxhealth_collection
-    <set >
-      <if test="school != null" >
+    <set>
+      <if test="school != null">
         school = #{school,jdbcType=VARCHAR},
       </if>
-      <if test="userName != null" >
+      <if test="userName != null">
         user_name = #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="userNo != null" >
+      <if test="userNo != null">
         user_no = #{userNo,jdbcType=VARCHAR},
       </if>
-      <if test="timestamp != null" >
+      <if test="timestamp != null">
         timestamp = #{timestamp,jdbcType=DATE},
       </if>
-      <if test="heathinfo1 != null" >
+      <if test="heathinfo1 != null">
         heathinfo1 = #{heathinfo1,jdbcType=VARCHAR},
       </if>
-      <if test="heathinfo2 != null" >
+      <if test="heathinfo2 != null">
         heathinfo2 = #{heathinfo2,jdbcType=INTEGER},
       </if>
-      <if test="heathinfo3 != null" >
+      <if test="heathinfo3 != null">
         heathinfo3 = #{heathinfo3,jdbcType=INTEGER},
       </if>
-      <if test="isQuarantine != null" >
+      <if test="isQuarantine != null">
         is_quarantine = #{isQuarantine,jdbcType=INTEGER},
       </if>
-      <if test="notes != null" >
+      <if test="notes != null">
         notes = #{notes,jdbcType=VARCHAR},
       </if>
-      <if test="temperature != null" >
+      <if test="temperature != null">
         temperature = #{temperature,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.sqsf.entity.SqFxhealthCollection" >
+  <update id="updateByPrimaryKey" parameterType="com.sqsf.entity.SqFxhealthCollection">
+    update sq_fxhealth_collection
+    set school = #{school,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_no = #{userNo,jdbcType=VARCHAR},
+      timestamp = #{timestamp,jdbcType=DATE},
+      heathinfo1 = #{heathinfo1,jdbcType=VARCHAR},
+      heathinfo2 = #{heathinfo2,jdbcType=INTEGER},
+      heathinfo3 = #{heathinfo3,jdbcType=INTEGER},
+      is_quarantine = #{isQuarantine,jdbcType=INTEGER},
+      notes = #{notes,jdbcType=VARCHAR},
+      temperature = #{temperature,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.sqsf.entity.SqFxhealthCollection">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_no" jdbcType="VARCHAR" property="userNo" />
+    <result column="timestamp" jdbcType="DATE" property="timestamp" />
+    <result column="heathinfo1" jdbcType="VARCHAR" property="heathinfo1" />
+    <result column="heathinfo2" jdbcType="INTEGER" property="heathinfo2" />
+    <result column="heathinfo3" jdbcType="INTEGER" property="heathinfo3" />
+    <result column="is_quarantine" jdbcType="INTEGER" property="isQuarantine" />
+    <result column="notes" jdbcType="VARCHAR" property="notes" />
+    <result column="temperature" jdbcType="VARCHAR" property="temperature" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, school, user_name, user_no, timestamp, heathinfo1, heathinfo2, heathinfo3, is_quarantine, 
+    notes, temperature, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sq_fxhealth_collection
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sq_fxhealth_collection
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sqsf.entity.SqFxhealthCollection">
+    insert into sq_fxhealth_collection (id, school, user_name, 
+      user_no, timestamp, heathinfo1, 
+      heathinfo2, heathinfo3, is_quarantine, 
+      notes, temperature, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{school,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{userNo,jdbcType=VARCHAR}, #{timestamp,jdbcType=DATE}, #{heathinfo1,jdbcType=VARCHAR}, 
+      #{heathinfo2,jdbcType=INTEGER}, #{heathinfo3,jdbcType=INTEGER}, #{isQuarantine,jdbcType=INTEGER}, 
+      #{notes,jdbcType=VARCHAR}, #{temperature,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sqsf.entity.SqFxhealthCollection">
+    insert into sq_fxhealth_collection
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="school != null">
+        school,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="userNo != null">
+        user_no,
+      </if>
+      <if test="timestamp != null">
+        timestamp,
+      </if>
+      <if test="heathinfo1 != null">
+        heathinfo1,
+      </if>
+      <if test="heathinfo2 != null">
+        heathinfo2,
+      </if>
+      <if test="heathinfo3 != null">
+        heathinfo3,
+      </if>
+      <if test="isQuarantine != null">
+        is_quarantine,
+      </if>
+      <if test="notes != null">
+        notes,
+      </if>
+      <if test="temperature != null">
+        temperature,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="school != null">
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userNo != null">
+        #{userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="timestamp != null">
+        #{timestamp,jdbcType=DATE},
+      </if>
+      <if test="heathinfo1 != null">
+        #{heathinfo1,jdbcType=VARCHAR},
+      </if>
+      <if test="heathinfo2 != null">
+        #{heathinfo2,jdbcType=INTEGER},
+      </if>
+      <if test="heathinfo3 != null">
+        #{heathinfo3,jdbcType=INTEGER},
+      </if>
+      <if test="isQuarantine != null">
+        #{isQuarantine,jdbcType=INTEGER},
+      </if>
+      <if test="notes != null">
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="temperature != null">
+        #{temperature,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sqsf.entity.SqFxhealthCollection">
+    update sq_fxhealth_collection
+    <set>
+      <if test="school != null">
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userNo != null">
+        user_no = #{userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="timestamp != null">
+        timestamp = #{timestamp,jdbcType=DATE},
+      </if>
+      <if test="heathinfo1 != null">
+        heathinfo1 = #{heathinfo1,jdbcType=VARCHAR},
+      </if>
+      <if test="heathinfo2 != null">
+        heathinfo2 = #{heathinfo2,jdbcType=INTEGER},
+      </if>
+      <if test="heathinfo3 != null">
+        heathinfo3 = #{heathinfo3,jdbcType=INTEGER},
+      </if>
+      <if test="isQuarantine != null">
+        is_quarantine = #{isQuarantine,jdbcType=INTEGER},
+      </if>
+      <if test="notes != null">
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="temperature != null">
+        temperature = #{temperature,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sqsf.entity.SqFxhealthCollection">
     update sq_fxhealth_collection
     set school = #{school,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
