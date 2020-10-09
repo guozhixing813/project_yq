@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sqsf.mapper.SqStudentInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.sqsf.entity.SqStudentInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="school" property="school" jdbcType="VARCHAR" />
+    <result column="college" property="college" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_no" property="userNo" jdbcType="INTEGER" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="classes" property="classes" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="person_type" property="personType" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="md5_password" property="md5Password" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="parents_phone" property="parentsPhone" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, school, college, user_name, user_no, sex, age, classes, phone, person_type, create_time, 
+    md5_password, department, parents_phone
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sq_student_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sq_student_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sqsf.entity.SqStudentInfo" >
+    insert into sq_student_info (id, school, college, 
+      user_name, user_no, sex, 
+      age, classes, phone, 
+      person_type, create_time, md5_password, 
+      department, parents_phone)
+    values (#{id,jdbcType=INTEGER}, #{school,jdbcType=VARCHAR}, #{college,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{userNo,jdbcType=INTEGER}, #{sex,jdbcType=VARCHAR}, 
+      #{age,jdbcType=INTEGER}, #{classes,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{personType,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{md5Password,jdbcType=VARCHAR}, 
+      #{department,jdbcType=VARCHAR}, #{parentsPhone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sqsf.entity.SqStudentInfo" >
+    insert into sq_student_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="school != null" >
+        school,
+      </if>
+      <if test="college != null" >
+        college,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userNo != null" >
+        user_no,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="classes != null" >
+        classes,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="personType != null" >
+        person_type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="md5Password != null" >
+        md5_password,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="parentsPhone != null" >
+        parents_phone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="college != null" >
+        #{college,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userNo != null" >
+        #{userNo,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="classes != null" >
+        #{classes,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="personType != null" >
+        #{personType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="md5Password != null" >
+        #{md5Password,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="parentsPhone != null" >
+        #{parentsPhone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sqsf.entity.SqStudentInfo" >
+    update sq_student_info
+    <set >
+      <if test="school != null" >
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="college != null" >
+        college = #{college,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userNo != null" >
+        user_no = #{userNo,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="classes != null" >
+        classes = #{classes,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="personType != null" >
+        person_type = #{personType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="md5Password != null" >
+        md5_password = #{md5Password,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="parentsPhone != null" >
+        parents_phone = #{parentsPhone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sqsf.entity.SqStudentInfo" >
+    update sq_student_info
+    set school = #{school,jdbcType=VARCHAR},
+      college = #{college,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_no = #{userNo,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      classes = #{classes,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      person_type = #{personType,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      md5_password = #{md5Password,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      parents_phone = #{parentsPhone,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

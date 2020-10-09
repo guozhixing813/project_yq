@@ -64,7 +64,7 @@
         </javaClientGenerator>
 
         <!-- 数据库表名字和我们的 entity 类对应的映射指定 -->
-        <table tableName="sq_url_tologin" domainObjectName="RootEntity" enableCountByExample="false"
+        <table tableName="sq_fxhealth_collection" domainObjectName="SqFxhealthCollection" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"></table>
     </context>
