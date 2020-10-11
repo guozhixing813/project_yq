@@ -1,6 +1,10 @@
 package com.sqsf.mapper;
 
 import com.sqsf.entity.RootEntity;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 public interface RootEntityMapper {
 
@@ -15,4 +19,12 @@ public interface RootEntityMapper {
     int updateByPrimaryKeySelective(RootEntity record);
 
     int updateByPrimaryKey(RootEntity record);
+
+    // 全局接口获取参数
+    @Select("SELECT school,user,password FROM sq_url_tologin " +
+            "WHERE school = #{school} AND user = #{user} AND password = #{password};")
+    @Results({
+    })
+    List<RootEntity> login(RootEntity rootEntity);
+
 }

@@ -2,6 +2,7 @@ package com.sqsf.service;
 
 import com.sqsf.entity.RootEntity;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -11,5 +12,8 @@ import java.util.List;
  */
 public interface RootService {
 
-//    RootEntity login(String school, String user, String password) throws JSONException;
+    // 登录
+    JSONObject login() throws JSONException;
+
+
 }
