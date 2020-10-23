@@ -33,8 +33,8 @@ import org.springframework.web.bind.annotation.*;
                 @RequestParam(value = "user",required = false) String user,
                 @RequestParam(value = "password",required = false) String password) {
 
-            System.out.println("--------");
-            System.out.println(school);
+//            System.out.println("--------");
+//            System.out.println(school);
             return rootService.login(school,user,password);
 
         }
