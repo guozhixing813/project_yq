@@ -11,19 +11,28 @@
     <result column="token" property="token" jdbcType="VARCHAR" />
     <result column="school_jc" property="schoolJc" jdbcType="VARCHAR" />
   </resultMap>
+    <resultMap id="schoolMap" type="com.sqsf.entity.RootEntity" >
+        <result column="school" property="school" jdbcType="VARCHAR" />
+        <result column="user" property="user" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="bigscreenUrl" property="bigscreenUrl" jdbcType="VARCHAR" />
+    </resultMap>
   <sql id="Base_Column_List" >
     id, school, user, password, bigscreen_url, wx_url, token, school_jc
   </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from sq_url_tologin
     where id = #{id,jdbcType=INTEGER}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sq_url_tologin
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.sqsf.entity.RootEntity" >
     insert into sq_url_tologin (id, school, user, 
       password, bigscreen_url, wx_url, 
@@ -87,6 +96,7 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.sqsf.entity.RootEntity" >
     update sq_url_tologin
     <set >
@@ -125,4 +135,12 @@
       school_jc = #{schoolJc,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+    <!--登录接口-->
+    <select id="login" parameterType="com.sqsf.entity.RootEntity" resultMap="BaseResultMap">
+        SELECT *
+        FROM sq_url_tologin
+        WHERE school = #{school} AND user = #{user} AND password = #{password}
+    </select>
+
 </mapper>

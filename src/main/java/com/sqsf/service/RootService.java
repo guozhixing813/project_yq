@@ -13,8 +13,8 @@ import java.util.List;
 
 public interface RootService {
 
+//    JSONObject login();
+
     // 登录
-    JSONObject login();
-
-
+    JSONObject login(String school, String user, String password);
 }

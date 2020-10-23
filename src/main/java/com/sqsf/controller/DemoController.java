@@ -16,17 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 //注解的方式进行配置
-@RestController
-@RequestMapping("/root")  //配置系统拦截url
-public class DemoController {
-
-    @Autowired
-    private RootService rootService;
-
-    @RequestMapping("/login")
-    public JSONObject login(){
-
-
-        return rootService.login();
-    }
-}
+//@RestController
+//@RequestMapping("/root")  //配置系统拦截url
+//public class DemoController {
+//
+//    @Autowired
+//    private RootService rootService;
+//
+//    @RequestMapping("/login")
+//    public JSONObject login(){
+//
+//
+//        return rootService.login();
+//    }
+//}

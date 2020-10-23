@@ -21,16 +21,6 @@ public interface RootEntityMapper {
 
     int updateByPrimaryKey(RootEntity record);
 
-//    // 全局接口获取参数
-//    @Select("SELECT school,user,password FROM sq_url_tologin " +
-//            "WHERE school = #{school} AND user = #{user} AND password = #{password};")
-//    @Results({
-//    })
-//    List<RootEntity> login(RootEntity rootEntity);
-
-    @Select("SELECT * FROM `sq_url_tologin`")
-    @Results({
-    })
-    List<RootEntity> login();
+    List<RootEntity> login(RootEntity rootEntity);
 
 }
