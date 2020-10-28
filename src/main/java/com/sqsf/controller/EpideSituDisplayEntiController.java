@@ -24,10 +24,11 @@ public class EpideSituDisplayEntiController {
 
 
     /**
-     * 接口 赵晓凤1：大屏最顶端信息：返校人数 外省返校人数 境外返校人数 重点观察人数
+     * 接口1 赵晓凤：大屏最顶端信息：返校人数 外省返校人数 境外返校人数 重点观察人数
      */
     @RequestMapping(value = "/sy_baseinfo", method = RequestMethod.GET)
     public Object getSyBaseinfo(String school) {
+
         return epideSituDisplayEntiService.getSyBaseinfo(school);
     }
 
@@ -38,6 +39,13 @@ public class EpideSituDisplayEntiController {
     public Object getSyZdgcryinfo(String school){
         return epideSituDisplayEntiService.getSyZdgcryinfo(school);
 
+    }
+    /**
+     * 接口4、赵晓凤：、校园人员分布：校园中心gps（百度地图）
+     */
+    @RequestMapping(value = "/sy_xyryfbinfo", method = RequestMethod.GET)
+    public Object getSyXyryfbinfo(String school){
+        return epideSituDisplayEntiService.getSyXyryfbinfo(school);
     }
 
 

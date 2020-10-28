@@ -44,6 +44,24 @@ public class EpideSituDisplayService {
      * 来源城市
      */
     private String originCity;
+    /**
+     * 学校中心经度
+     */
+    private String centerLongitude;
+
+    /**
+     * 学校中心维度
+     */
+    private String centerDimension;
+    /**
+     * 经度
+     */
+    private Double longitude;
+
+    /**
+     * 维度
+     */
+    private Double dimension;
 
     public Integer getId() {
         return id;
@@ -99,4 +117,29 @@ public class EpideSituDisplayService {
     public String  getOriginCity() {return originCity; }
 
     public void setOriginCity(String originCity) { this.originCity = originCity;}
+
+    public String getCenterLongitude() {return centerLongitude ;}
+
+    public void setCenterLongitude(String centerLongitude) {
+        this.centerLongitude = centerLongitude;
+    }
+
+    public String getCenterDimension() {return centerDimension; }
+
+    public void setCenterDimension(String centerDimension) {
+        this.centerDimension = centerDimension;
+    }
+
+    public Double getLongitude() {return longitude;
+    }
+    public void setLongitude(){
+        this.longitude = longitude;
+    }
+
+    public Double getDimension() {return  dimension;
+    }
+
+    public void setDimension(Double dimension) {
+        this.dimension = dimension;
+    }
 }

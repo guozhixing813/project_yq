@@ -42,4 +42,24 @@ public interface EpideSituDisplayEntiMapper {
     })
 
     List<EpideSituDisplayService> getSyZdgcryinfo(String school);
+    //接口4：校园人员分布：校园中心gps（百度地图）
+    @Select("SELECT center_longitude AS centerLongitude,center_dimension AS centerDimension" +
+            " FROM `sq_school_configure`" +
+            " WHERE school=#{school};")
+    @Results({
+    })
+    List<EpideSituDisplayService> getSyXyryfbinfo(String school);
+    //接口4：校园人员分布：校园中心gps（百度地图）
+    @Select("SELECT longitude AS longitude ,dimension AS dimension " +
+            "FROM `sq_wxgj_collection` " +
+            "WHERE school=#{school} "+
+            " AND id IN (" +
+            "select SUBSTRING_INDEX(" +
+            "group_concat(" +
+            "id order by `time` desc),',',1)" +
+            " from sq_wxgj_collection group by user_no)")
+    @Results({
+    })
+
+    List<EpideSituDisplayService> getSyXyryfbinfoLD(String school);
 }

@@ -53,5 +53,38 @@ public class EpideSituDisplayEntiServiceImpl implements EpideSituDisplayEntiServ
         return resultJsonObject;
     }
 
+    @Override
+    public JSONObject getSyXyryfbinfo(String school) {
+        JSONObject resultJsonObject = new JSONObject();
+        List<EpideSituDisplayService> epideSituInfoList = EpideSituDisplayEntiMapper.getSyXyryfbinfo(school);
+        List<EpideSituDisplayService> epideSituInfoLDList = EpideSituDisplayEntiMapper.getSyXyryfbinfoLD(school);
+        if (epideSituInfoList.size() == 0) {
+            resultJsonObject.put("errorCode", "4001");// 错误码4000参数为空 4001参数不正确， 4002认证失败
+            return resultJsonObject;
+        }
+        Double[] center = new Double[] { Double.parseDouble(epideSituInfoList.get(0).getCenterLongitude().toString()),
+                Double.parseDouble(epideSituInfoList.get(0).getCenterDimension()) };
+        epideSituInfoList.get(0).getCenterLongitude();
+        epideSituInfoList.get(0).getCenterDimension();
+        JSONObject result = new JSONObject();
+        result.put("center", center);
+        JSONArray poits = new JSONArray();
+        for (EpideSituDisplayService epideSituInfoLD : epideSituInfoLDList) {
+
+            JSONObject jsonObj = new JSONObject();
+            JSONObject geometry = new JSONObject();
+            Double[] gpsInfo = new Double[] { epideSituInfoLD.getLongitude(), epideSituInfoLD.getDimension() };
+            geometry.put("type", "Point");
+            geometry.put("coordinates", gpsInfo);
+            jsonObj.put("geometry", geometry);
+            poits.add(jsonObj);
+        }
+
+        resultJsonObject.put("result", result);
+        resultJsonObject.put("poits", poits);
+        return resultJsonObject;
+
+    }
+
 
 }
