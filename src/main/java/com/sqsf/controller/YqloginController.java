@@ -1,10 +1,13 @@
 package com.sqsf.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.sqsf.service.RootService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author gzx
@@ -21,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 
         @Autowired
         private RootService rootService;
-
 
         /**
          * 接口1大屏登录接口
@@ -40,11 +42,19 @@ import org.springframework.web.bind.annotation.*;
         }
 
 
+    /**
+     * 接口2：获取学校列表
+     * @return
+     */
+    @RequestMapping(value = "/getSchoolList",method = RequestMethod.GET)
+    public Object getSchoolList(){
 
-
-
-
-
-
-
+        return rootService.getSchoolList();
     }
+
+}
+
+
+
+
+

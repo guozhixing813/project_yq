@@ -143,4 +143,11 @@
         WHERE school = #{school} AND user = #{user} AND password = #{password}
     </select>
 
+    <!--获取学校列表-->
+    <select id="getSchoolList" parameterType="com.sqsf.entity.RootEntity" resultMap="BaseResultMap">
+        SELECT school
+        FROM `sq_school_configure`
+        GROUP BY school
+    </select>
+
 </mapper>
