@@ -26,7 +26,7 @@ import java.util.List;
         private RootService rootService;
 
         /**
-         * 接口1大屏登录接口
+         * 郭枝杏：接口1大屏登录接口
          * @return
          */
         @RequestMapping(value = "/login",method = RequestMethod.GET)
@@ -43,7 +43,7 @@ import java.util.List;
 
 
     /**
-     * 接口2：获取学校列表
+     * 郭枝杏：接口2：获取学校列表
      * @return
      */
     @RequestMapping(value = "/getSchoolList",method = RequestMethod.GET)
