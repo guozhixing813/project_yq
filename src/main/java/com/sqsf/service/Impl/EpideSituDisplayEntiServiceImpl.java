@@ -2,9 +2,7 @@ package com.sqsf.service.Impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.sqsf.entity.RootEntity;
 import com.sqsf.mapper.EpideSituDisplayEntiMapper;
-import com.sqsf.mapper.RootEntityMapper;
 import com.sqsf.service.EpideSituDisplayEntiService;
 import com.sqsf.service.EpideSituDisplayService;
 import com.sqsf.service.SchoolPara;
@@ -18,7 +16,7 @@ import java.util.List;
 @Service
 public class EpideSituDisplayEntiServiceImpl implements EpideSituDisplayEntiService {
     @Autowired(required = false)
-    private com.sqsf.mapper.EpideSituDisplayEntiMapper EpideSituDisplayEntiMapper;
+    private EpideSituDisplayEntiMapper EpideSituDisplayEntiMapper;
     @Override
     public JSONObject getSyBaseinfo(String school) {
         JSONObject resultJsonObject = new JSONObject();
