@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 @SpringBootApplication
 @RequestMapping("/root")
-public class getEpideSituDisplayPersonController {
+public class EpideSituDisplayPersonController {
 
     /**
      * 数据库接口
@@ -40,6 +40,18 @@ public class getEpideSituDisplayPersonController {
         return epideSituDisplayPersonService.getEntiCounts(school);
 
         }
+
+    @RequestMapping(value = "/glCount",method = RequestMethod.GET)
+    public Object getGlCount(
+            @RequestParam(value = "isStudent", required = true) String isStudent,
+            @RequestParam(value = "personNo", required = true) String personNo
+    ){
+
+        return null;
+    }
+
+
+
 
 
 
