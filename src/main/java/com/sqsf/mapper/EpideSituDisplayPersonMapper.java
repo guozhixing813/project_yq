@@ -31,4 +31,12 @@ public interface EpideSituDisplayPersonMapper {
     @Results({
     })
     public List<EpideSituDisplayPersonEntity> getZdsrCount(String school);
+
+    @Select("SELECT DATE_FORMAT( time, '%H' ) AS timestamp,SUM(IF(person_type ='1',1,0)) AS teachercount ,"
+            + "SUM(IF(person_type ='0',1,0)) AS studentcount,SUM(IF(person_type ='3',1,0)) AS other  "
+            + "FROM `sq_wxgj_collection` LEFT JOIN sq_student_info ON  sq_wxgj_collection.user_no ="
+            + " sq_student_info.user_no WHERE sq_wxgj_collection.time> CURDATE() AND sq_wxgj_collection.school =#{school} AND addr like '%校门%' GROUP BY DATE_FORMAT( time, '%Y-%m-%d %H' )")
+    @Results({
+    })
+    List<EpideSituDisplayPersonEntity> getXmcrCount(String school); // 校门出入
 }

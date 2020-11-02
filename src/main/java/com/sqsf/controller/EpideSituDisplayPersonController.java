@@ -19,7 +19,7 @@ import java.util.List;
 //注解的方式进行配置
 @RestController
 @SpringBootApplication
-@RequestMapping("/root")
+@RequestMapping("/root/getEpideSituDisplayPerson")
 public class EpideSituDisplayPersonController {
 
     /**
@@ -29,7 +29,7 @@ public class EpideSituDisplayPersonController {
     private EpideSituDisplayPersonService epideSituDisplayPersonService;
 
     /**
-     * 郭枝杏：3.1整体概况接口
+     * 郭枝杏：3.1 整体概况接口
      * @param school
      * @return
      */
@@ -41,21 +41,39 @@ public class EpideSituDisplayPersonController {
 
         }
 
+    /**
+     * 郭枝杏：3.2 隔离人数饼状图
+     * @param isStudent
+     * @param personNo
+     * @return
+     */
     @RequestMapping(value = "/glCount",method = RequestMethod.GET)
     public Object getGlCount(
-            @RequestParam(value = "isStudent", required = true) String isStudent,
-            @RequestParam(value = "personNo", required = true) String personNo
+            @RequestParam(value = "isStudent", required = false) String isStudent,
+            @RequestParam(value = "personNo", required = false) String personNo
     ){
 
-        return null;
+        return epideSituDisplayPersonService.getEntiCount(isStudent, personNo);
+    }
+
+    /**
+     * 郭枝杏：3.3 校门出入折线图
+     * @param school
+     * @return
+     */
+    @RequestMapping(value="/xmcrCount",method= RequestMethod.GET)
+    public Object getXmcrCount(
+            @RequestParam(value = "school", required = false) String school
+    ) {
+
+        return epideSituDisplayPersonService.getXmcrCount(school);
     }
 
 
 
 
 
-
-}
+    }
 
 
 

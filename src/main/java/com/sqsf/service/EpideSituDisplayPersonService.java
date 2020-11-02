@@ -17,6 +17,10 @@ public interface EpideSituDisplayPersonService{
 
     List<EpideSituDisplayPersonEntity> getZdsrCount(String school);
 
-
     JSONObject getEntiCounts(String school);
+
+    Object getEntiCount(String isStudent, String personNo);
+
+
+    Object getXmcrCount(String school); // 校门出入数
 }
