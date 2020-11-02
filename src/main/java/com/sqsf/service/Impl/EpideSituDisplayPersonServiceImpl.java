@@ -15,7 +15,7 @@ import java.util.List;
  * @create 2020-11-01 17:59
  */
 @Service
-public class EpideSituDisplayPersonImpl implements EpideSituDisplayPersonService {
+public class EpideSituDisplayPersonServiceImpl implements EpideSituDisplayPersonService {
 
     private static final String DEFAULTSCHOOL ="商丘师范学院";
 
