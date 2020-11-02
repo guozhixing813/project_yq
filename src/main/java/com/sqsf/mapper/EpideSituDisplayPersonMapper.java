@@ -39,4 +39,20 @@ public interface EpideSituDisplayPersonMapper {
     @Results({
     })
     List<EpideSituDisplayPersonEntity> getXmcrCount(String school); // 校门出入
+
+    /**
+     * 钱慧玲：4 预警接口
+     * @param school
+     * @return
+     */
+    @Select("SELECT heathinfo1,timestamp FROM `sq_fxhealth_collection` WHERE school =#{school} and heathinfo1!='00001';")
+    @Results({
+    })
+    List<EpideSituDisplayPersonEntity> getYjxno(String school);
+
+    @Select("SELECT count(1) AS count FROM `sq_fxhealth_collection` "
+            + "WHERE school =#{school} and create_time>  date_sub(NOW(),interval 1 day) and heathinfo1!='00001';")
+    @Results({
+    })
+    List<EpideSituDisplayPersonEntity> getYjxnos(String school);
 }

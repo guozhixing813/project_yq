@@ -70,6 +70,16 @@ public class EpideSituDisplayPersonController {
     }
 
 
+    /**
+     * 钱慧玲：4 预警接口
+     * @param school
+     * @return
+     */
+    @RequestMapping(value="/yjxn",method= RequestMethod.GET)
+    public JSONObject getYjxno(
+            @RequestParam(value = "school", required = false)String school){
+        return  epideSituDisplayPersonService.getYjxno(school);
+    }
 
 
 

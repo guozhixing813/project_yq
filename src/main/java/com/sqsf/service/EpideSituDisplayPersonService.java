@@ -21,6 +21,7 @@ public interface EpideSituDisplayPersonService{
 
     Object getEntiCount(String isStudent, String personNo);
 
-
     Object getXmcrCount(String school); // 校门出入数
+
+    JSONObject getYjxno(String school);
 }

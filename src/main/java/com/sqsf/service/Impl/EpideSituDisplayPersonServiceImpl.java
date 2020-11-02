@@ -9,6 +9,7 @@ import com.sqsf.service.SchoolPara;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -171,6 +172,45 @@ public class EpideSituDisplayPersonServiceImpl implements EpideSituDisplayPerson
             resultJsonObject.put("errorCode", "4003");//错误码4000参数为空 4001参数不正确， 4002认证失败
 
         }
+        return resultJsonObject;
+    }
+
+    /**
+     * 钱慧玲：4 预警接口
+     * @param school
+     * @return
+     */
+    @Override
+    public JSONObject getYjxno(String school) {
+        JSONObject resultJsonObject = new JSONObject();
+        resultJsonObject.put("errorCode", "");//错误码4000参数为空 4001参数不正确， 4002认证失败
+        if(null==school ||"".equals(school)) school =DEFAULTSCHOOL;
+
+        List <String> result = new ArrayList<>();
+        List<EpideSituDisplayPersonEntity> epideSituInfoList=epideSituDisplayPersonMapper.getYjxno(school);
+        List<EpideSituDisplayPersonEntity> epidesSituInfoList=epideSituDisplayPersonMapper.getYjxnos(school);
+
+        Integer[] count = new Integer[] {0,0,0,0,0};
+        for(EpideSituDisplayPersonEntity epideSituInfo:epideSituInfoList) {
+            String heathinfo1 = epideSituInfo.getHeathinfo1();
+            String timestamp = epideSituInfo.getTimestamp();
+            if(heathinfo1.length()!=5) break;
+            for(int i =0 ;i<4;i++) {
+                if("1".equals(heathinfo1.substring(i, i+1))) {
+                    count[i]++;
+                }
+            }
+
+        }
+        result.add("至目前累计前出现发热"+count[0]+"位");
+        result.add("至目前累计前出现咳嗽"+count[1]+"位");
+        result.add("至目前累计前出现气喘"+count[2]+"位");
+        result.add("至目前累计前出现腹泻"+count[3]+"位");
+        //result.add("至目前累计确诊0例");
+        result.add("今日新增发热、咳嗽、气喘、腹泻"+epidesSituInfoList.get(0).getCount()+"位");
+        resultJsonObject.put("result", result);
+
+//        logger.info("sy_ejxyfxinfo API  END");
         return resultJsonObject;
     }
 
