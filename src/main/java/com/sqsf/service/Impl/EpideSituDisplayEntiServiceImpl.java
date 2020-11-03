@@ -8,10 +8,18 @@ import com.sqsf.mapper.RootEntityMapper;
 import com.sqsf.service.EpideSituDisplayEntiService;
 import com.sqsf.service.EpideSituDisplayService;
 import com.sqsf.service.SchoolPara;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -86,5 +94,85 @@ public class EpideSituDisplayEntiServiceImpl implements EpideSituDisplayEntiServ
 
     }
 
+    @Override
+    public JSONObject getSyYqjkinfo(String school) {
+        JSONObject resultJsonObject = new JSONObject();
+        List<SchoolPara> schoolInfo = EpideSituDisplayEntiMapper.getSchoolInfo(school);
+        String province = schoolInfo.get(0).getProvince();
+        String city = schoolInfo.get(0).getCity();
+
+        RestTemplate restTemplate = new RestTemplate();//是Spring用于同步client端的核心类，简化了与http服务的通信，并满足RestFul原则，程序代码可以给它提供URL，并提取结果。默认情况下，RestTemplate默认依赖jdk的HTTP连接工具。
+        HttpHeaders headers = new HttpHeaders();//http消息头
+        headers.add("authoration", "apicode");//添加响应头信息
+        headers.add("apicode", "65f2157f4fff4426b83519770ec5bd9b");//添加响应头信息
+
+        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();//设置超时处理
+        HttpClient httpClient = HttpClientBuilder.create().setRedirectStrategy(new LaxRedirectStrategy()).build();//获得HTTP客户端
+        factory.setHttpClient(httpClient);
+        restTemplate.setRequestFactory(factory);
+        HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity(null, headers);
+        UriComponentsBuilder builder = UriComponentsBuilder
+                .fromHttpUrl("http://api.yonyoucloud.com/apis/dst/ncov/country");
+        String resEntity = restTemplate.exchange(builder.build().toString(), HttpMethod.GET, request, String.class)
+                .getBody();
+
+        UriComponentsBuilder builder2 = UriComponentsBuilder
+                .fromHttpUrl("https://api.yonyoucloud.com/apis/dst/ncov/spreadQuery");
+        String resEntity2 = restTemplate.exchange(builder2.build().toString(), HttpMethod.GET, request, String.class)
+                .getBody();
+
+        JSONObject jsonResult = JSONObject.parseObject(resEntity);
+        JSONObject jsonResult2 = JSONObject.parseObject(resEntity2);
+        if (!"200".equals(jsonResult.getString("code")) && !"200".equals(jsonResult2.getString("code"))) {
+            resultJsonObject.put("errorCode", "4000");
+            return resultJsonObject;
+        }
+        JSONObject dataResult = JSONObject.parseObject(jsonResult.get("data").toString());
+
+        // ----------------------------------接口2信息处理------------------------------------------------
+        Integer[] qx = { 0, 0, 0, 0, 0, 0 };
+        Integer[] qshi = { 0, 0, 0, 0, 0, 0 };
+        Integer[] qshen = { 0, 0, 0, 0, 0, 0 };
+        Integer[] qg = { 0, 0, 0, 0, 0, 0 };
+        JSONArray mapResultList = JSONArray.parseArray(jsonResult2.get("newslist").toString());
+        for (int i = 0; i < mapResultList.size(); i++) {
+            String provinceName = JSONObject.parseObject(mapResultList.get(i).toString()).get("provinceName")
+                    .toString();
+            if (provinceName.contains(province)) {
+                JSONObject sfInfo = JSONObject.parseObject(mapResultList.get(i).toString());
+                qshen[0] = sfInfo.getInteger("confirmedCount");
+                qshen[2] = sfInfo.getInteger("currentConfirmedCount");
+                qshen[3] = sfInfo.getInteger("suspectedCount");
+                qshen[4] = sfInfo.getInteger("curedCount");
+                qshen[5] = sfInfo.getInteger("deadCount");
+                JSONArray cityResultList = JSONArray.parseArray(sfInfo.get("cities").toString());
+                for (int j = 0; j < cityResultList.size(); j++) {
+                    JSONObject cityInfo = cityResultList.getJSONObject(j);
+                    if (city.equals(cityInfo.getString("cityName"))) {
+                        qshi[0] = cityInfo.getInteger("confirmedCount");
+
+                        qshi[2] = cityInfo.getInteger("currentConfirmedCount");
+                        qshi[3] = cityInfo.getInteger("suspectedCount");
+                        qshi[4] = cityInfo.getInteger("curedCount");
+                        qshi[5] = cityInfo.getInteger("deadCount");
+                    }
+                }
+            }
+        }
+        qg[0] = dataResult.getInteger("confirmedCount");
+        qg[2] = dataResult.getInteger("currentConfirmedCount");
+        qg[3] = dataResult.getInteger("suspectedCount");
+        qg[4] = dataResult.getInteger("curedCount");
+        qg[5] = dataResult.getInteger("deadCount");
+
+        resultJsonObject.put("errorCode", "");// 错误码4000参数为空 4001参数不正确， 4002认证失败
+        JSONObject result = new JSONObject();
+        result.put("qg", qg);
+        result.put("qx", qx);
+        result.put("qshen", qshen);
+        result.put("qshi", qshi);
+        resultJsonObject.put("result", result);// 错误码4000参数为空 4001参数不正确， 4002认证失败
+        return resultJsonObject;
+    }
 
 }

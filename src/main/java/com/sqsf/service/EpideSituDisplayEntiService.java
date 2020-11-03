@@ -10,4 +10,6 @@ public interface EpideSituDisplayEntiService {
     JSONObject getSyZdgcryinfo(String school);
 
     JSONObject getSyXyryfbinfo(String school);
+
+    JSONObject getSyYqjkinfo(String school);
 }
