@@ -82,8 +82,26 @@ public class EpideSituDisplayPersonController {
     }
 
 
+    /**
+     * 李婉婷  7.人员详情信息
+     * @param isStudent
+     * @param personNo
+     * @return
+     */
 
+    @RequestMapping(value="/personInfo",method= RequestMethod.GET)
+    public Object getPersonInfoDetail(
+            @RequestParam(value = "isStudent", required = false) String isStudent,
+            @RequestParam(value = "personNo", required = false) String personNo,
+            @RequestParam(value = "school", required = false) String school
+    ) {
+        return epideSituDisplayPersonService.getpersonInfoDetails(school,personNo,isStudent);
     }
+
+
+
+
+}
 
 
 

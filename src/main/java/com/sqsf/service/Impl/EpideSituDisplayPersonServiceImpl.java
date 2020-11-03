@@ -213,6 +213,100 @@ public class EpideSituDisplayPersonServiceImpl implements EpideSituDisplayPerson
 //        logger.info("sy_ejxyfxinfo API  END");
         return resultJsonObject;
     }
+    /**
+     * 李婉婷  7。人员详情信息
+     * @param school
+     * @param personNo
+     * @param isStudent
+     * @return
+     */
+    @Override
+    public Object getpersonInfoDetail(String school, String personNo, String isStudent) {
+        return null;
+    }
+    @Override
+    public Object getpersonInfoSDetail(String school, String personNo, String isStudent) {
+        return null;
+    }
+    @Override
+    public JSONObject getpersonInfoDetails(String school, String personNo, String isStudent) {
+
+        JSONObject resultJsonObject = new JSONObject();
+        if(null==school ||"".equals(school)) school =DEFAULTSCHOOL;
+        //校验输入参数合法性
+        if("".equals(isStudent)||"".equals(isStudent)) {
+            resultJsonObject.put("errorCode", "4000");//错误码4000参数为空 4001参数不正确， 4002认证失败
+            return resultJsonObject;
+        }
+
+        List<EpideSituDisplayPersonEntity> baseInfoList = epideSituDisplayPersonMapper.getpersonInfoDetail(school,personNo);
+        List<EpideSituDisplayPersonEntity> baseInfoSList = epideSituDisplayPersonMapper.getpersonInfoSDetail(school,personNo);
+
+        if(baseInfoList.size()<=0) {
+            resultJsonObject.put("errorCode", "4003");//错误码4000参数为空 4001参数不正确， 4002认证失败
+            resultJsonObject.put("Mgss", "无数据");//错误码4000参数为空 4001参数不正确， 4002认证失败
+            resultJsonObject.put("name", "");//姓名
+            resultJsonObject.put("age", "");//年龄
+            resultJsonObject.put("class", "");//班级
+            resultJsonObject.put("sex", "");//性别
+            resultJsonObject.put("returnTime", "");//返校时间
+            resultJsonObject.put("segregateTime", "");//随访人
+            resultJsonObject.put("from", "");//输入值
+            resultJsonObject.put("transport", "");//输入值
+
+            resultJsonObject.put("phone", "");//输入值
+            resultJsonObject.put("parentPhone", "");//输入值
+
+            return resultJsonObject;
+        }
+        resultJsonObject.put("errorCode", "");//错误码4000参数为空 4001参数不正确， 4002认证失败
+        resultJsonObject.put("isStudent", isStudent);//输入值
+        resultJsonObject.put("personNo", personNo);//输入值
+
+        resultJsonObject.put("from", null==baseInfoList.get(0).getAddr()?"":baseInfoList.get(0).getAddr());//输入值
+
+        StringBuffer transport = new StringBuffer("");
+        if(null != baseInfoList.get(0).getFxVehicl() && baseInfoList.get(0).getFxVehicl().length()==5) {
+            String fxVehicl = baseInfoList.get(0).getFxVehicl();
+            if(fxVehicl.substring(0, 1).equals("1")) {
+                transport.append(" 汽车");
+            }
+            if(fxVehicl.substring(1, 2).equals("1")) {
+                transport.append(" 火车");
+            }
+            if(fxVehicl.substring(2, 3).equals("1")) {
+                transport.append(" 高铁");
+            }
+            if(fxVehicl.substring(3, 4).equals("1")) {
+                transport.append(" 飞机");
+            }
+            if(fxVehicl.substring(4, 5).equals("1")) {
+                transport.append(" 私家车");
+            }
+        }
+
+        resultJsonObject.put("transport", transport+" "+ (baseInfoList.get(0).getFxjtSm()==null?"":baseInfoList.get(0).getFxjtSm()));//输入值
+
+        resultJsonObject.put("name", baseInfoList.get(0).getUserName());//姓名
+        resultJsonObject.put("age", baseInfoList.get(0).getAge());//年龄
+        resultJsonObject.put("class", baseInfoList.get(0).getClasses());//班级
+        resultJsonObject.put("sex", baseInfoList.get(0).getSex());//性别
+        resultJsonObject.put("returnTime", baseInfoList.get(0).getFxTime());//返校时间
+        resultJsonObject.put("segregateTime", baseInfoSList.size()==0?baseInfoList.get(0).getFxTime():baseInfoSList.get(0).getTimestamp());//随访人
+        resultJsonObject.put("phone", baseInfoList.get(0).getPhone());//输入值
+        resultJsonObject.put("parentPhone", baseInfoList.get(0).getParentPhone());//输入值
+
+        try {
+
+
+        } catch (Exception e) {
+            resultJsonObject.put("errorCode", "4003");//错误码4000参数为空 4001参数不正确， 4002认证失败
+        }
+
+//        logger.info("getRelationshipMap API  END");
+        return resultJsonObject;
+    }
+
 
 
 }

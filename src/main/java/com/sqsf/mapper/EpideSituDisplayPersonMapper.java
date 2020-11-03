@@ -1,6 +1,7 @@
 package com.sqsf.mapper;
 
 import com.sqsf.entity.EpideSituDisplayPersonEntity;
+import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -42,6 +43,7 @@ public interface EpideSituDisplayPersonMapper {
 
     /**
      * 钱慧玲：4 预警接口
+     *
      * @param school
      * @return
      */
@@ -55,4 +57,32 @@ public interface EpideSituDisplayPersonMapper {
     @Results({
     })
     List<EpideSituDisplayPersonEntity> getYjxnos(String school);
+
+
+    /**
+     * 李婉婷  7.人员详情信息
+     * @param userNo
+     * @return
+     */
+    @Select("SELECT TMP1.user_name AS userName, sex AS sex, age AS age, classes AS classes, phone, parents_phone AS parentPhone, "
+            + "fx_time AS fxTime,TMP2.fx_vehicl AS fxVehicl,TMP2.fxjt_sm AS fxjtSm ,TMP2.fx_addr_city AS addr FROM (SELECT * FROM sq_student_info "
+            + "WHERE school =#{school} AND user_no = #{userNo}) TMP1 LEFT JOIN (select * from "
+            + "sq_fxdata_collection AS tmp1 WHERE school = #{school} AND user_no = #{userNo} AND "
+            + "tmp1.id IN (select SUBSTRING_INDEX(group_concat(id order by `create_time` desc),',',1) "
+            + "from sq_fxdata_collection WHERE school = #{school} AND user_no = #{userNo} group by user_no))"
+            + "TMP2 ON TMP1.user_no = TMP2.user_no;" +
+            "")
+    @Results({
+    })
+    List<EpideSituDisplayPersonEntity> getpersonInfoDetail(String school,String userNo);
+    /**
+     *
+     * @param userNo
+     * @return
+     */
+    @Select("SELECT create_time AS timestamp FROM `sq_fxhealth_collection` WHERE school =#{school} AND user_no=#{userNo} and heathinfo1!='00001';")
+    @Results({
+    })
+    List<EpideSituDisplayPersonEntity> getpersonInfoSDetail(String school,String userNo);
+
 }
