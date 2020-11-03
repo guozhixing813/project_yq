@@ -13,8 +13,9 @@ import java.util.List;
 
 public interface RootService {
 
-//    JSONObject login();
-
     // 登录
     JSONObject login(String school, String user, String password);
+
+    // 获取学校列表
+    Object getSchoolList();
 }

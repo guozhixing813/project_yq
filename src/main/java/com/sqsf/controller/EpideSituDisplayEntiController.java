@@ -8,16 +8,18 @@ import com.sqsf.service.SchoolPara;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 //解决跨域问题
-@CrossOrigin(allowCredentials = "true", allowedHeaders = "*", maxAge = 3600)
-@RestController//返回json字符串的数据，直接可以编写RESTFIUL的接口
-@RequestMapping("/root/getEpideSituDisplayEnti")//配置系统拦截url
-
-
+@CrossOrigin(allowCredentials = "true", allowedHeaders = "*",maxAge = 3600)
+//注解的方式进行配置
+@RestController  //返回json字符串的数据，直接可以编写RESTFul的接口
+@SpringBootApplication  //@SpringBootApplication声明让spring boot自动给程序进行必要的配置
+@RequestMapping("/root")  //配置系统拦截url
 public class EpideSituDisplayEntiController {
     @Autowired
     private EpideSituDisplayEntiService epideSituDisplayEntiService;

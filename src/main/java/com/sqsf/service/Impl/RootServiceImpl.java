@@ -1,5 +1,6 @@
 package com.sqsf.service.Impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.sqsf.entity.RootEntity;
 import com.sqsf.mapper.RootEntityMapper;
 import com.sqsf.service.RootService;
@@ -59,9 +60,28 @@ public class RootServiceImpl implements RootService {
         return res;
     }
 
+    /**
+     * 2 获取学校列表
+     * @return
+     */
+    @Override
+    public Object getSchoolList() {
+
+        List<RootEntity> schoolInfo = rootEntityMapper.getSchoolList();
+        JSONArray schoolListArray = new JSONArray();
+        for (RootEntity school:schoolInfo) {
+            schoolListArray.add(school.getSchool());
+        }
+
+        JSONObject resultJsonObject = new JSONObject();
+		resultJsonObject.put("errorCode", "");//错误码4000参数为空 4001参数不正确， 4002认证失败
+		resultJsonObject.put("MGSS", "获取学校列表成功");//
+
+		resultJsonObject.put("school", schoolListArray);
 
 
-
+        return resultJsonObject;
+    }
 
 
 }

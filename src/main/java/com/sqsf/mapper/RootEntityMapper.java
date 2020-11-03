@@ -1,8 +1,6 @@
 package com.sqsf.mapper;
 
 import com.sqsf.entity.RootEntity;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,5 +20,7 @@ public interface RootEntityMapper {
     int updateByPrimaryKey(RootEntity record);
 
     List<RootEntity> login(RootEntity rootEntity);
+
+    List<RootEntity> getSchoolList();
 
 }
