@@ -90,8 +90,8 @@ public interface EpideSituDisplayPersonMapper {
     List<EpideSituDisplayPersonEntity> getPersonInfoDetail(String school, String personNo);
 
     /**
-     * 钱慧玲：6、响应事件
-     *
+     * 钱慧玲：  6、响应事件
+     * 李婉婷：  7.人员详情信息
      * @param school
      * @param personNo
      * @return
@@ -104,6 +104,10 @@ public interface EpideSituDisplayPersonMapper {
     List<EpideSituDisplayPersonEntity> getRelationPersonInfo(String school, String personNo);
 
 
+    @Select("SELECT create_time AS timestamp FROM `sq_fxhealth_collection` WHERE school =#{school} AND user_no=#{userNo} and heathinfo1!='00001';")
+    @Results({
+    })
+    List<EpideSituDisplayPersonEntity> getPersonInfoSDetail(String school,String userNo);
 
 
 

@@ -99,19 +99,36 @@ public class EpideSituDisplayPersonController {
         return  epideSituDisplayPersonService.getSysj(school);
     }
 
-    /**
+    /**有错
      * 钱慧玲：接口6、响应事件
      * @return
      */
     @RequestMapping(value="/syrelationship",method= RequestMethod.GET)
-    public JSONObject getSySelationship (
-            @RequestParam(value = "isStudent", required = true) String isStudent,
+    public Object getSySelationship (
+//            @RequestParam(value = "isStudent", required = true) String isStudent,
             @RequestParam(value = "personNo", required = true) String personNo,
             @RequestParam(value = "school", required = false) String school
     ) {
         return epideSituDisplayPersonService.getSySelationship(school,personNo);
     }
 
+
+    /**
+     * 有错
+     * 李婉婷  7.人员详情信息
+     * @param isStudent
+     * @param personNo
+     * @return
+     */
+
+    @RequestMapping(value="/personInfo",method= RequestMethod.GET)
+    public Object getPersonInfoDetail(
+            @RequestParam(value = "isStudent", required = false) String isStudent,
+            @RequestParam(value = "personNo", required = false) String personNo,
+            @RequestParam(value = "school", required = false) String school
+    ) {
+        return epideSituDisplayPersonService.getPersonInfoDetails(school,personNo,isStudent);
+    }
 
 
 

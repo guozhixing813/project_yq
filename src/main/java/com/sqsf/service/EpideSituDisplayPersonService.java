@@ -28,4 +28,20 @@ public interface EpideSituDisplayPersonService{
     Object getSysj(String school);
 
     JSONObject getSySelationship(String school, String personNo);
+
+    /**
+     * 李婉婷  7.人员详情信息
+     * @param school
+     * @param personNo
+     * @return
+     */
+    Object getpersonInfoDetail(String school,String personNo, String isStudent);
+    Object getpersonInfoSDetail(String school,String personNo, String isStudent);
+    JSONObject getPersonInfoDetails(String school,String personNo, String isStudent);
+
+    JSONObject getSyGrgjt(String school, String personNo, String isStudent);
+
+
+
+
 }
