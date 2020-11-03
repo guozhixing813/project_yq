@@ -213,97 +213,123 @@ public class EpideSituDisplayPersonServiceImpl implements EpideSituDisplayPerson
 //        logger.info("sy_ejxyfxinfo API  END");
         return resultJsonObject;
     }
+
     /**
-     * 李婉婷  7。人员详情信息
-     * @param school
-     * @param personNo
-     * @param isStudent
+     * 钱慧玲：5、响应事件
      * @return
      */
     @Override
-    public Object getpersonInfoDetail(String school, String personNo, String isStudent) {
-        return null;
+    public JSONObject getSysj(String school) {
+        JSONObject resultJsonObject = new JSONObject();
+        resultJsonObject.put("errorCode", "");//错误码4000参数为空 4001参数不正确， 4002认证失败
+        if(null==school ||"".equals(school)) school =DEFAULTSCHOOL;
+
+        JSONArray result = new JSONArray();
+        List<EpideSituDisplayPersonEntity> epideSituInfoList = epideSituDisplayPersonMapper.getSysj(school);
+        for(EpideSituDisplayPersonEntity epideSituInfo:epideSituInfoList) {
+            JSONObject jsonObj1= new JSONObject();
+            jsonObj1.put("name", epideSituInfo.getUserName());
+            jsonObj1.put("content", epideSituInfo.getTimestamp()+"隔离");
+            jsonObj1.put("level", "一级");
+            result.add(jsonObj1);
+        }
+
+
+        resultJsonObject.put("result", result);
+
+        return resultJsonObject;
     }
+
+    /**
+     * 钱慧玲：6、响应事件
+     * @return
+     */
     @Override
-    public Object getpersonInfoSDetail(String school, String personNo, String isStudent) {
-        return null;
-    }
-    @Override
-    public JSONObject getpersonInfoDetails(String school, String personNo, String isStudent) {
+    public JSONObject getSySelationship(String school, String personNo) {
 
         JSONObject resultJsonObject = new JSONObject();
-        if(null==school ||"".equals(school)) school =DEFAULTSCHOOL;
-        //校验输入参数合法性
-        if("".equals(isStudent)||"".equals(isStudent)) {
-            resultJsonObject.put("errorCode", "4000");//错误码4000参数为空 4001参数不正确， 4002认证失败
-            return resultJsonObject;
-        }
-
-        List<EpideSituDisplayPersonEntity> baseInfoList = epideSituDisplayPersonMapper.getpersonInfoDetail(school,personNo);
-        List<EpideSituDisplayPersonEntity> baseInfoSList = epideSituDisplayPersonMapper.getpersonInfoSDetail(school,personNo);
-
-        if(baseInfoList.size()<=0) {
-            resultJsonObject.put("errorCode", "4003");//错误码4000参数为空 4001参数不正确， 4002认证失败
-            resultJsonObject.put("Mgss", "无数据");//错误码4000参数为空 4001参数不正确， 4002认证失败
-            resultJsonObject.put("name", "");//姓名
-            resultJsonObject.put("age", "");//年龄
-            resultJsonObject.put("class", "");//班级
-            resultJsonObject.put("sex", "");//性别
-            resultJsonObject.put("returnTime", "");//返校时间
-            resultJsonObject.put("segregateTime", "");//随访人
-            resultJsonObject.put("from", "");//输入值
-            resultJsonObject.put("transport", "");//输入值
-
-            resultJsonObject.put("phone", "");//输入值
-            resultJsonObject.put("parentPhone", "");//输入值
-
-            return resultJsonObject;
-        }
         resultJsonObject.put("errorCode", "");//错误码4000参数为空 4001参数不正确， 4002认证失败
-        resultJsonObject.put("isStudent", isStudent);//输入值
-        resultJsonObject.put("personNo", personNo);//输入值
+        if (null == school || "".equals(school)) school = DEFAULTSCHOOL;
+        JSONArray categoryArray = new JSONArray();
+        JSONArray linksArray = new JSONArray();
+        JSONArray nodesList = new JSONArray();
 
-        resultJsonObject.put("from", null==baseInfoList.get(0).getAddr()?"":baseInfoList.get(0).getAddr());//输入值
-
-        StringBuffer transport = new StringBuffer("");
-        if(null != baseInfoList.get(0).getFxVehicl() && baseInfoList.get(0).getFxVehicl().length()==5) {
-            String fxVehicl = baseInfoList.get(0).getFxVehicl();
-            if(fxVehicl.substring(0, 1).equals("1")) {
-                transport.append(" 汽车");
-            }
-            if(fxVehicl.substring(1, 2).equals("1")) {
-                transport.append(" 火车");
-            }
-            if(fxVehicl.substring(2, 3).equals("1")) {
-                transport.append(" 高铁");
-            }
-            if(fxVehicl.substring(3, 4).equals("1")) {
-                transport.append(" 飞机");
-            }
-            if(fxVehicl.substring(4, 5).equals("1")) {
-                transport.append(" 私家车");
-            }
+        List<EpideSituDisplayPersonEntity> baseInfoList = epideSituDisplayPersonMapper.getPersonInfoDetail(school, personNo);
+        List<EpideSituDisplayPersonEntity> relationList = epideSituDisplayPersonMapper.getRelationPersonInfo(school, personNo);
+        if (baseInfoList.size() == 0 || relationList.size() == 0) {
+            resultJsonObject.put("errorCode", "4001");//错误码4000参数为空 4001参数不正确， 4002认证失败
+            resultJsonObject.put("msg", "查询不到人");//错误码4000参数为空 4001参数不正确， 4002认证失败
+            resultJsonObject.put("categories", categoryArray);
+            resultJsonObject.put("nodes", nodesList);
+            resultJsonObject.put("links", linksArray);
+            return resultJsonObject;
         }
 
-        resultJsonObject.put("transport", transport+" "+ (baseInfoList.get(0).getFxjtSm()==null?"":baseInfoList.get(0).getFxjtSm()));//输入值
 
-        resultJsonObject.put("name", baseInfoList.get(0).getUserName());//姓名
-        resultJsonObject.put("age", baseInfoList.get(0).getAge());//年龄
-        resultJsonObject.put("class", baseInfoList.get(0).getClasses());//班级
-        resultJsonObject.put("sex", baseInfoList.get(0).getSex());//性别
-        resultJsonObject.put("returnTime", baseInfoList.get(0).getFxTime());//返校时间
-        resultJsonObject.put("segregateTime", baseInfoSList.size()==0?baseInfoList.get(0).getFxTime():baseInfoSList.get(0).getTimestamp());//随访人
-        resultJsonObject.put("phone", baseInfoList.get(0).getPhone());//输入值
-        resultJsonObject.put("parentPhone", baseInfoList.get(0).getParentPhone());//输入值
+        JSONObject jsonObj1 = new JSONObject();
+        jsonObj1.put("name", "核心人物");
+        categoryArray.add(jsonObj1);
+        JSONObject jsonObj2 = new JSONObject();
+        jsonObj2.put("name", "舍友");
+        categoryArray.add(jsonObj2);
+//		JSONObject jsonObj3= new JSONObject();
+//		jsonObj3.put("name", "密切同学");
+//		categoryArray.add(jsonObj3);
+        JSONObject jsonObj4 = new JSONObject();
+        jsonObj4.put("name", "轨迹接触");
+        categoryArray.add(jsonObj4);
 
-        try {
 
+        JSONObject nodesObj1 = new JSONObject();
+        nodesObj1.put("category", 0);
+        nodesObj1.put("name", baseInfoList.get(0).getUserName());
+        nodesObj1.put("value", 25);
+        nodesObj1.put("label", baseInfoList.get(0).getUserName());
+        nodesList.add(nodesObj1);
+        JSONObject nodesObj2 = new JSONObject();
+        nodesObj2.put("category", 1);
+        nodesObj2.put("name", "彭岚承");
+        nodesObj2.put("value", 25);
+        nodesObj2.put("label", "彭岚承");
+        nodesList.add(nodesObj2);
+        JSONObject nodesObj3 = new JSONObject();
+        nodesObj3.put("category", 1);
+        nodesObj3.put("name", "董会风");
+        nodesObj3.put("value", 15);
+        nodesObj3.put("label", "董会风");
+        nodesList.add(nodesObj3);
 
-        } catch (Exception e) {
-            resultJsonObject.put("errorCode", "4003");//错误码4000参数为空 4001参数不正确， 4002认证失败
+        for (EpideSituDisplayPersonEntity relationObject : relationList) {
+            JSONObject nodesObj4 = new JSONObject();
+            nodesObj4.put("category", 2);
+            nodesObj4.put("name", relationObject.getUserName());
+            nodesObj4.put("value", 23);
+            nodesObj4.put("label", relationObject.getUserName());
+            nodesList.add(nodesObj4);
         }
 
-//        logger.info("getRelationshipMap API  END");
+
+        for (int i = 1; i < nodesList.size(); i++) {
+            JSONObject linkObj1 = new JSONObject();
+            linkObj1.put("source", nodesList.getJSONObject(0).getString("name"));
+            linkObj1.put("target", nodesList.getJSONObject(i).getString("name"));
+            linkObj1.put("weight ", 1);
+            linksArray.add(linkObj1);
+        }
+        for (int i = 2; i < nodesList.size(); i++) {
+            JSONObject linkObj1 = new JSONObject();
+            linkObj1.put("source", nodesList.getJSONObject(1).getString("name"));
+            linkObj1.put("target", nodesList.getJSONObject(i).getString("name"));
+            linkObj1.put("weight ", 1);
+            linksArray.add(linkObj1);
+        }
+
+
+        resultJsonObject.put("categories", categoryArray);
+        resultJsonObject.put("nodes", nodesList);
+        resultJsonObject.put("links", linksArray);
+
+//        logger.info("sy_ejxyfxinfo API  END");
         return resultJsonObject;
     }
 

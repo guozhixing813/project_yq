@@ -1,7 +1,6 @@
 package com.sqsf.mapper;
 
 import com.sqsf.entity.EpideSituDisplayPersonEntity;
-import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -60,8 +59,20 @@ public interface EpideSituDisplayPersonMapper {
 
 
     /**
-     * 李婉婷  7.人员详情信息
-     * @param userNo
+     * 接口5事件列表
+     *
+     * @return
+     */
+    @Select("SELECT user_name AS userName,user_no AS userNo,`timestamp`AS timestamp"
+            + " FROM `sq_fxhealth_collection` WHERE school =#{school} and is_quarantine=1;")
+    @Results({
+    })
+    List<EpideSituDisplayPersonEntity> getSysj(String school);
+
+    /**
+     * 钱慧玲：5 响应事件
+     *
+     * @param school
      * @return
      */
     @Select("SELECT TMP1.user_name AS userName, sex AS sex, age AS age, classes AS classes, phone, parents_phone AS parentPhone, "
@@ -73,16 +84,27 @@ public interface EpideSituDisplayPersonMapper {
             + "TMP2 ON TMP1.user_no = TMP2.user_no;" +
             "")
     @Results({
+//	        @Result(property = "name",  column = "name"),
+//	        @Result(property = "industry", column = "industry")
     })
-    List<EpideSituDisplayPersonEntity> getpersonInfoDetail(String school,String userNo);
+    List<EpideSituDisplayPersonEntity> getPersonInfoDetail(String school, String personNo);
+
     /**
+     * 钱慧玲：6、响应事件
      *
-     * @param userNo
+     * @param school
+     * @param personNo
      * @return
      */
     @Select("SELECT create_time AS timestamp FROM `sq_fxhealth_collection` WHERE school =#{school} AND user_no=#{userNo} and heathinfo1!='00001';")
     @Results({
+//	        @Result(property = "name",  column = "name"),
+//	        @Result(property = "industry", column = "industry")
     })
-    List<EpideSituDisplayPersonEntity> getpersonInfoSDetail(String school,String userNo);
+    List<EpideSituDisplayPersonEntity> getRelationPersonInfo(String school, String personNo);
+
+
+
+
 
 }

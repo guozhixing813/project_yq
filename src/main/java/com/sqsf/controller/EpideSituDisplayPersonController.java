@@ -30,38 +30,41 @@ public class EpideSituDisplayPersonController {
 
     /**
      * 郭枝杏：3.1 整体概况接口
+     *
      * @param school
      * @return
      */
-    @RequestMapping(value="/entiCount",method= RequestMethod.GET)
+    @RequestMapping(value = "/entiCount", method = RequestMethod.GET)
     public Object getEntiCount(
             @RequestParam(value = "school", required = false) String school) {
 
         return epideSituDisplayPersonService.getEntiCounts(school);
 
-        }
+    }
 
     /**
      * 郭枝杏：3.2 隔离人数饼状图
+     *
      * @param isStudent
      * @param personNo
      * @return
      */
-    @RequestMapping(value = "/glCount",method = RequestMethod.GET)
+    @RequestMapping(value = "/glCount", method = RequestMethod.GET)
     public Object getGlCount(
             @RequestParam(value = "isStudent", required = false) String isStudent,
             @RequestParam(value = "personNo", required = false) String personNo
-    ){
+    ) {
 
         return epideSituDisplayPersonService.getEntiCount(isStudent, personNo);
     }
 
     /**
      * 郭枝杏：3.3 校门出入折线图
+     *
      * @param school
      * @return
      */
-    @RequestMapping(value="/xmcrCount",method= RequestMethod.GET)
+    @RequestMapping(value = "/xmcrCount", method = RequestMethod.GET)
     public Object getXmcrCount(
             @RequestParam(value = "school", required = false) String school
     ) {
@@ -72,30 +75,41 @@ public class EpideSituDisplayPersonController {
 
     /**
      * 钱慧玲：4 预警接口
+     *
      * @param school
      * @return
      */
-    @RequestMapping(value="/yjxn",method= RequestMethod.GET)
+    @RequestMapping(value = "/yjxn", method = RequestMethod.GET)
     public JSONObject getYjxno(
-            @RequestParam(value = "school", required = false)String school){
-        return  epideSituDisplayPersonService.getYjxno(school);
+            @RequestParam(value = "school", required = false) String school) {
+        return epideSituDisplayPersonService.getYjxno(school);
     }
 
 
     /**
-     * 李婉婷  7.人员详情信息
-     * @param isStudent
-     * @param personNo
+     * 钱慧玲：接口5、响应事件
      * @return
      */
-
-    @RequestMapping(value="/personInfo",method= RequestMethod.GET)
-    public Object getPersonInfoDetail(
-            @RequestParam(value = "isStudent", required = false) String isStudent,
-            @RequestParam(value = "personNo", required = false) String personNo,
+    @RequestMapping(value="/sysj",method= RequestMethod.GET)
+    public Object getSysj (
+//        @RequestParam(value = "isStudent", required = true) String isStudent,
+//        @RequestParam(value = "personNo", required = true) String personNo
             @RequestParam(value = "school", required = false) String school
     ) {
-        return epideSituDisplayPersonService.getpersonInfoDetails(school,personNo,isStudent);
+        return  epideSituDisplayPersonService.getSysj(school);
+    }
+
+    /**
+     * 钱慧玲：接口6、响应事件
+     * @return
+     */
+    @RequestMapping(value="/syrelationship",method= RequestMethod.GET)
+    public JSONObject getSySelationship (
+            @RequestParam(value = "isStudent", required = true) String isStudent,
+            @RequestParam(value = "personNo", required = true) String personNo,
+            @RequestParam(value = "school", required = false) String school
+    ) {
+        return epideSituDisplayPersonService.getSySelationship(school,personNo);
     }
 
 
