@@ -83,7 +83,7 @@ public class EpideSituDisplayPersonController {
 
 
     /**
-     * 李婉婷  7.人员详情信息
+     * 李婉婷  接口7.人员详情信息
      * @param isStudent
      * @param personNo
      * @return
@@ -99,7 +99,32 @@ public class EpideSituDisplayPersonController {
     }
 
 
+    /**
+     * 李婉婷  接口8.个人轨迹图
+     */
+    @RequestMapping(value="/sy_grgjt",method= RequestMethod.GET)
+    public Object getSyGrgjt(
+            @RequestParam(value = "isStudent", required = false) String isStudent,
+            @RequestParam(value = "personNo", required = false) String personNo,
+            @RequestParam(value = "school", required = false) String school
+    ) {
+        return epideSituDisplayPersonService.getSyGrgjt(school,personNo,isStudent);
+    }
 
+    /**
+     * 李婉婷  接口9、个人响应事件
+     * @param isStudent
+     * @param personNo
+     * @return
+     */
+    @RequestMapping(value="/sy_grxysj",method= RequestMethod.GET)
+    public Object getSyGrxysj(
+            @RequestParam(value = "isStudent", required = false) String isStudent,
+            @RequestParam(value = "personNo", required = false) String personNo,
+            @RequestParam(value = "school", required = false) String school
+    ) {
+        return epideSituDisplayPersonService.getSyGrxysj(school,personNo,isStudent);
+    }
 
 }
 

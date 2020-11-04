@@ -85,4 +85,41 @@ public interface EpideSituDisplayPersonMapper {
     })
     List<EpideSituDisplayPersonEntity> getpersonInfoSDetail(String school,String userNo);
 
+
+    /**
+     * 李婉婷  接口8.个人轨迹图
+     *
+     * @param school
+     * @return
+     */
+    @Select("SELECT center_longitude AS centerLongitude,center_dimension AS centerDimension"
+            + " FROM `sq_school_configure` WHERE school=#{school};")
+    @Results({
+    })
+    List<EpideSituDisplayPersonEntity> getSyGrgjt(String school);
+
+    /**
+     * 李婉婷  接口8.个人轨迹图
+     * @param personNo
+     * @param school
+     * @return
+     */
+    @Select("SELECT addr, longitude AS longitude ,dimension AS dimension,time FROM `sq_wxgj_collection` "
+            + "WHERE school=#{school} and user_no=#{personNo} limit 20;")
+    @Results({
+    })
+    List<EpideSituDisplayPersonEntity> getSyGrgjtLD(String school, String personNo);
+
+    /**
+     * 李婉婷  接口9.个人相应事件
+     * @param personNo
+     * @param school
+     * @return
+     */
+    @Select("SELECT user_name AS userName ,user_no AS userNo, addr,time FROM `sq_wxgj_collection` WHERE school=#{school} and user_no=#{personNo};")
+    @Results({
+    })
+    List<EpideSituDisplayPersonEntity> getSyGrxysj(String school,String personNo,String isStudent);
+
+
 }
