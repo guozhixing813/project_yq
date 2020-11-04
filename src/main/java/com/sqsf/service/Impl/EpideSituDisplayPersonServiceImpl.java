@@ -8,6 +8,7 @@ import com.sqsf.service.EpideSituDisplayPersonService;
 import com.sqsf.service.SchoolPara;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -213,6 +214,17 @@ public class EpideSituDisplayPersonServiceImpl implements EpideSituDisplayPerson
 //        logger.info("sy_ejxyfxinfo API  END");
         return resultJsonObject;
     }
+
+    @Override
+    public Object getSysj(String school) {
+        return null;
+    }
+
+    @Override
+    public JSONObject getSySelationship(String school, String personNo) {
+        return null;
+    }
+
     /**
      * 李婉婷  7。人员详情信息
      * @param school
@@ -228,8 +240,10 @@ public class EpideSituDisplayPersonServiceImpl implements EpideSituDisplayPerson
     public Object getpersonInfoSDetail(String school, String personNo, String isStudent) {
         return null;
     }
+
+
     @Override
-    public JSONObject getpersonInfoDetails(String school, String personNo, String isStudent) {
+    public JSONObject getPersonInfoDetails(String school, String personNo, String isStudent) {
 
         JSONObject resultJsonObject = new JSONObject();
         if(null==school ||"".equals(school)) school =DEFAULTSCHOOL;
@@ -307,6 +321,124 @@ public class EpideSituDisplayPersonServiceImpl implements EpideSituDisplayPerson
         return resultJsonObject;
     }
 
+    /**
+     * 接口8、个人轨迹图
+     * @return
+     */
 
+    @Override
+    public JSONObject getSyGrgjt(String school, String personNo, String isStudent) {
+        JSONObject resultJsonObject = new JSONObject();
+        resultJsonObject.put("errorCode", "");//错误码4000参数为空 4001参数不正确， 4002认证失败
+        if(null==school ||"".equals(school)) school =DEFAULTSCHOOL;
 
+        List<EpideSituDisplayPersonEntity> epideSituInfoList=epideSituDisplayPersonMapper.getSyGrgjt(school);
+        List<EpideSituDisplayPersonEntity> epideSituInfoLDList=epideSituDisplayPersonMapper.getSyGrgjtLD(school,personNo);
+        if(epideSituInfoList.size()==0) {
+            resultJsonObject.put("errorCode", "4003");//错误码4000参数为空 4001参数不正确， 4002认证失败
+            resultJsonObject.put("Mgss", "无数据");//错误码4000参数为空 4001参数不正确， 4002认证失败
+            return resultJsonObject;
+        }
+        /**
+         * 取学校中心
+         */
+        Double[] center = new Double[] {Double.parseDouble(epideSituInfoList.get(0).getCenterLongitude().toString()),
+                Double.parseDouble(epideSituInfoList.get(0).getCenterDimension())};
+        epideSituInfoList.get(0).getCenterLongitude();
+        epideSituInfoList.get(0).getCenterDimension();
+        JSONObject result = new JSONObject();
+        resultJsonObject.put("center", center);
+
+        //设置地图点
+        JSONObject geoCoordMap = new JSONObject();
+        JSONArray targetData = new JSONArray();
+        for(EpideSituDisplayPersonEntity epideSituInfoLD:epideSituInfoLDList) {
+
+            Double[] gpsInfo = new Double[] {epideSituInfoLD.getLongitude(),epideSituInfoLD.getDimension()};
+            geoCoordMap.put(epideSituInfoLD.getAddr(),gpsInfo);
+
+        }
+
+        //只有一次地址记录位置轨迹为空
+        resultJsonObject.put("geoCoordMap", geoCoordMap);
+        if(epideSituInfoLDList.size()==1) {
+
+            JSONArray targetDataObj = new JSONArray();
+            JSONObject jsonObjOr = new JSONObject();
+            jsonObjOr.put("name",epideSituInfoLDList.get(0).getAddr());
+            jsonObjOr.put("value", epideSituInfoLDList.get(0).getTime());
+            targetDataObj.add(jsonObjOr);
+
+            JSONObject jsonObjTr = new JSONObject();
+            jsonObjTr.put("name",epideSituInfoLDList.get(0).getAddr());
+            jsonObjTr.put("value", epideSituInfoLDList.get(0).getTime());
+
+            targetDataObj.add(jsonObjTr);
+            targetDataObj.add(1);
+
+            targetData.add(targetDataObj);
+            JSONObject geometry = new JSONObject();
+
+            resultJsonObject.put("targetData", targetData);
+            return resultJsonObject;
+        }
+        for(int i = 1;i < epideSituInfoLDList.size();i++) {
+
+            JSONArray targetDataObj = new JSONArray();
+            JSONObject jsonObjOr = new JSONObject();
+            jsonObjOr.put("name",epideSituInfoLDList.get(i-1).getAddr());
+            jsonObjOr.put("value", epideSituInfoLDList.get(i-1).getTime());
+            targetDataObj.add(jsonObjOr);
+
+            JSONObject jsonObjTr = new JSONObject();
+            jsonObjTr.put("name",epideSituInfoLDList.get(i).getAddr());
+            jsonObjTr.put("value", epideSituInfoLDList.get(i).getTime());
+
+            targetDataObj.add(jsonObjTr);
+            targetDataObj.add(1);
+
+            targetData.add(targetDataObj);
+            JSONObject geometry = new JSONObject();
+        }
+
+        resultJsonObject.put("geoCoordMap", geoCoordMap);
+        resultJsonObject.put("targetData", targetData);
+
+//        logger.info("sy_grgjt API  END");
+        return resultJsonObject;
+    }
+
+    /**
+     * 接口9
+     * @param school
+     * @param personNo
+     * @param isStudent
+     * @return
+     */
+    public JSONObject getSyGrxysj(String school, String personNo, String isStudent) {
+        JSONObject resultJsonObject = new JSONObject();
+        resultJsonObject.put("errorCode", "");//错误码4000参数为空 4001参数不正确， 4002认证失败
+        if(null==school ||"".equals(school)) school =DEFAULTSCHOOL;
+
+        List<EpideSituDisplayPersonEntity> epideSituInfoList=epideSituDisplayPersonMapper.getSyGrxysj(school,personNo,isStudent);
+        if(epideSituInfoList.size()==0) {
+            resultJsonObject.put("errorCode", "4003");//错误码4000参数为空 4001参数不正确， 4002认证失败
+            resultJsonObject.put("Mgss", "无数据");//错误码4000参数为空 4001参数不正确， 4002认证失败
+            return resultJsonObject;
+        }
+
+        JSONArray arryObj = new JSONArray();
+        for(EpideSituDisplayPersonEntity epideSituInfo:epideSituInfoList) {
+
+            JSONObject jsonObj = new JSONObject();
+            jsonObj.put("name",epideSituInfo.getUserName());
+            jsonObj.put("content",epideSituInfo.getTime()+"到达"+epideSituInfo.getAddr());
+            jsonObj.put("level","一级");
+            arryObj.add(jsonObj);
+        }
+
+        resultJsonObject.put("arryObj", arryObj);
+//        logger.info("sy_grgjt API  END");
+        return resultJsonObject;
+    }
 }

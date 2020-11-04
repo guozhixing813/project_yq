@@ -102,8 +102,8 @@ public interface EpideSituDisplayPersonMapper {
 //	        @Result(property = "industry", column = "industry")
     })
     List<EpideSituDisplayPersonEntity> getRelationPersonInfo(String school, String personNo);
-
-
+    List<EpideSituDisplayPersonEntity> getpersonInfoDetail(String school, String personNo);
+    List<EpideSituDisplayPersonEntity> getpersonInfoSDetail(String school, String personNo);
     @Select("SELECT create_time AS timestamp FROM `sq_fxhealth_collection` WHERE school =#{school} AND user_no=#{userNo} and heathinfo1!='00001';")
     @Results({
     })
@@ -146,6 +146,7 @@ public interface EpideSituDisplayPersonMapper {
     @Results({
     })
     List<EpideSituDisplayPersonEntity> getSyGrxysj(String school,String personNo,String isStudent);
+
 
 
 }

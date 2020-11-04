@@ -18,7 +18,7 @@ import java.util.List;
 @CrossOrigin(allowCredentials = "true", allowedHeaders = "*",maxAge = 3600)
 //注解的方式进行配置
 @RestController
-@SpringBootApplication
+//@SpringBootApplication
 @RequestMapping("/root/getEpideSituDisplayPerson")
 public class EpideSituDisplayPersonController {
 
@@ -95,11 +95,35 @@ public class EpideSituDisplayPersonController {
             @RequestParam(value = "personNo", required = false) String personNo,
             @RequestParam(value = "school", required = false) String school
     ) {
-        return epideSituDisplayPersonService.getpersonInfoDetails(school,personNo,isStudent);
+        return epideSituDisplayPersonService.getPersonInfoDetails(school,personNo,isStudent);
     }
 
-
-
+    /**
+     * 李婉婷  8.个人轨迹图
+     * @param isStudent
+     * @param personNo
+     * @return
+     */
+    @RequestMapping(value="/sy_grgjt",method= RequestMethod.GET)
+    public Object getSyGrgjt(
+            @RequestParam(value = "isStudent", required = false) String isStudent,
+            @RequestParam(value = "personNo", required = false) String personNo,
+            @RequestParam(value = "school", required = false) String school
+    ) {
+        return epideSituDisplayPersonService.getSyGrgjt(school,personNo,isStudent);
+    }
+    /**
+     * 接口9、个人响应事件
+     * @return
+     */
+    @RequestMapping(value="/sy_grxysj",method= RequestMethod.GET)
+    public Object getSyGrxysj(
+            @RequestParam(value = "isStudent", required = true) String isStudent,
+            @RequestParam(value = "personNo", required = true) String personNo,
+            @RequestParam(value = "school", required = false) String school
+    ) {
+        return epideSituDisplayPersonService.getSyGrxysj(school,personNo,isStudent);
+    }
 
 }
 

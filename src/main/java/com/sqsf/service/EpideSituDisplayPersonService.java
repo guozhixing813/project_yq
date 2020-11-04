@@ -39,7 +39,7 @@ public interface EpideSituDisplayPersonService{
     Object getpersonInfoSDetail(String school,String personNo, String isStudent);
     JSONObject getPersonInfoDetails(String school,String personNo, String isStudent);
 
-    JSONObject getSyGrgjt(String school, String personNo, String isStudent);
+
 
 
 
