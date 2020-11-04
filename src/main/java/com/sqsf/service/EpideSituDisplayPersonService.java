@@ -23,7 +23,11 @@ public interface EpideSituDisplayPersonService{
 
     Object getXmcrCount(String school); // 校门出入数
 
-    JSONObject getYjxno(String school);
+    JSONObject getYjxno(String school); // 预警
+
+    Object getSysj(String school);
+
+    JSONObject getSySelationship(String school, String personNo);
 
     /**
      * 李婉婷  7.人员详情信息
@@ -33,7 +37,12 @@ public interface EpideSituDisplayPersonService{
      */
     Object getpersonInfoDetail(String school,String personNo, String isStudent);
     Object getpersonInfoSDetail(String school,String personNo, String isStudent);
-    JSONObject getpersonInfoDetails(String school,String personNo, String isStudent);
+    JSONObject getPersonInfoDetails(String school,String personNo, String isStudent);
+
+    JSONObject getSyGrgjt(String school, String personNo, String isStudent);
+
+
+
 
     /**
      * 李婉婷  8.个人轨迹图
