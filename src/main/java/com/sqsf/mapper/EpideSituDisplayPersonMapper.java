@@ -69,25 +69,25 @@ public interface EpideSituDisplayPersonMapper {
     })
     List<EpideSituDisplayPersonEntity> getSysj(String school);
 
-//    /**
-//     * 钱慧玲：5 响应事件
-//     *
-//     * @param school
-//     * @return
-//     */
-//    @Select("SELECT TMP1.user_name AS userName, sex AS sex, age AS age, classes AS classes, phone, parents_phone AS parentPhone, "
-//            + "fx_time AS fxTime,TMP2.fx_vehicl AS fxVehicl,TMP2.fxjt_sm AS fxjtSm ,TMP2.fx_addr_city AS addr FROM (SELECT * FROM sq_student_info "
-//            + "WHERE school =#{school} AND user_no = #{userNo}) TMP1 LEFT JOIN (select * from "
-//            + "sq_fxdata_collection AS tmp1 WHERE school = #{school} AND user_no = #{userNo} AND "
-//            + "tmp1.id IN (select SUBSTRING_INDEX(group_concat(id order by `create_time` desc),',',1) "
-//            + "from sq_fxdata_collection WHERE school = #{school} AND user_no = #{userNo} group by user_no))"
-//            + "TMP2 ON TMP1.user_no = TMP2.user_no;" +
-//            "")
-//    @Results({
-////	        @Result(property = "name",  column = "name"),
-////	        @Result(property = "industry", column = "industry")
-//    })
-//    List<EpideSituDisplayPersonEntity> getPersonInfoDetail(String school, String personNo);
+    /**
+     * 钱慧玲：5 响应事件
+     *
+     * @param school
+     * @return
+     */
+    @Select("SELECT TMP1.user_name AS userName, sex AS sex, age AS age, classes AS classes, phone, parents_phone AS parentPhone, "
+            + "fx_time AS fxTime,TMP2.fx_vehicl AS fxVehicl,TMP2.fxjt_sm AS fxjtSm ,TMP2.fx_addr_city AS addr FROM (SELECT * FROM sq_student_info "
+            + "WHERE school =#{school} AND user_no = #{userNo}) TMP1 LEFT JOIN (select * from "
+            + "sq_fxdata_collection AS tmp1 WHERE school = #{school} AND user_no = #{userNo} AND "
+            + "tmp1.id IN (select SUBSTRING_INDEX(group_concat(id order by `create_time` desc),',',1) "
+            + "from sq_fxdata_collection WHERE school = #{school} AND user_no = #{userNo} group by user_no))"
+            + "TMP2 ON TMP1.user_no = TMP2.user_no;" +
+            "")
+    @Results({
+//	        @Result(property = "name",  column = "name"),
+//	        @Result(property = "industry", column = "industry")
+    })
+    List<EpideSituDisplayPersonEntity> getPersonInfoDetail(String school, String personNo);
     /**
      *
      * @param userNo
@@ -103,7 +103,7 @@ public interface EpideSituDisplayPersonMapper {
             "")
     @Results({
     })
-    List<EpideSituDisplayPersonEntity> getpersonInfoDetail(String school, String personNo);
+    List<EpideSituDisplayPersonEntity> getpersonInfoDetail(String school, String userNo);
     /**
      * 钱慧玲：  6、响应事件
      * 李婉婷：  7.人员详情信息

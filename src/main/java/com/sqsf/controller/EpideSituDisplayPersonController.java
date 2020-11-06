@@ -95,7 +95,7 @@ public class EpideSituDisplayPersonController {
             @RequestParam(value = "personNo", required = false) String personNo,
             @RequestParam(value = "school", required = false) String school
     ) {
-        return epideSituDisplayPersonService.getpersonInfoDetail(school,personNo,isStudent);
+        return epideSituDisplayPersonService.getPersonInfoDetail(school,personNo,isStudent);
     }
 
     /**
