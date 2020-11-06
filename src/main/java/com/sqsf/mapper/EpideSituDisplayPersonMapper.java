@@ -102,15 +102,8 @@ public interface EpideSituDisplayPersonMapper {
     })
     List<EpideSituDisplayPersonEntity> getPersonInfoDetail(@Param("school") String school, @Param("userNo") String personNo);
 
-    @Select("SELECT create_time AS timestamp FROM `sq_fxhealth_collection` WHERE school =#{school} AND user_no=#{userNo} and heathinfo1!='00001';")
-    @Results({
-//	        @Result(property = "name",  column = "name"),
-//	        @Result(property = "industry", column = "industry")
-    })
-    List<EpideSituDisplayPersonEntity> getPersonInfoSDetail(String school, String userNo);
-
     /**
-     * 钱慧玲：6.响应事件
+     * 钱慧玲：  6、响应事件
      *
      * @param school
      * @param personNo
@@ -121,7 +114,32 @@ public interface EpideSituDisplayPersonMapper {
 //	        @Result(property = "name",  column = "name"),
 //	        @Result(property = "industry", column = "industry")
     })
-    List<EpideSituDisplayPersonEntity> getRelationPersonInfo(@Param("school") String school, @Param("userNo") String personNo);
+    List<EpideSituDisplayPersonEntity> getRelationPersonInfo(String school, String personNo);
+
+    /**
+     * @param userNo
+     * @return
+     */
+    @Select("SELECT TMP1.user_name AS userName, sex AS sex, age AS age, classes AS classes, phone, parents_phone AS parentPhone, "
+            + "fx_time AS fxTime,TMP2.fx_vehicl AS fxVehicl,TMP2.fxjt_sm AS fxjtSm ,TMP2.fx_addr_city AS addr FROM (SELECT * FROM yq_student_info "
+            + "WHERE school =#{school} AND user_no = #{userNo}) TMP1 LEFT JOIN (select * from "
+            + "yq_fxdata_collection AS tmp1 WHERE school = #{school} AND user_no = #{userNo} AND "
+            + "tmp1.id IN (select SUBSTRING_INDEX(group_concat(id order by `create_time` desc),',',1) "
+            + "from yq_fxdata_collection WHERE school = #{school} AND user_no = #{userNo} group by user_no))"
+            + "TMP2 ON TMP1.user_no = TMP2.user_no;" +
+            "")
+    @Results({
+//	        @Result(property = "name",  column = "name"),
+//	        @Result(property = "industry", column = "industry")
+    })
+    List<EpideSituDisplayPersonEntity> getpersonInfoDetail(String school, String personNo);
+
+    List<EpideSituDisplayPersonEntity> getpersonInfoSDetail(String school, String personNo);
+
+    @Select("SELECT create_time AS timestamp FROM `sq_fxhealth_collection` WHERE school =#{school} AND user_no=#{userNo} and heathinfo1!='00001';")
+    @Results({
+    })
+    List<EpideSituDisplayPersonEntity> getPersonInfoSDetail(String school, String userNo);
 
 
 }
