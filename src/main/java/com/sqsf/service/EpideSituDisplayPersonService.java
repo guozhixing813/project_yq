@@ -38,7 +38,7 @@ public interface EpideSituDisplayPersonService{
     Object getpersonInfoDetail(String school,String personNo, String isStudent);
     Object getpersonInfoSDetail(String school,String personNo, String isStudent);
     JSONObject getPersonInfoDetails(String school,String personNo, String isStudent);
-
+    Object getPersonInfoDetail(String school, String personNo, String isStudent);
 
 
 
@@ -61,4 +61,6 @@ public interface EpideSituDisplayPersonService{
      * @return
      */
     JSONObject getSyGrxysj(String school, String personNo, String isStudent);
+
+
 }
