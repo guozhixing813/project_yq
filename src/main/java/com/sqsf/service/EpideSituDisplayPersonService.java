@@ -30,6 +30,4 @@ public interface EpideSituDisplayPersonService{
     JSONObject getSySelationship(String school, String personNo);
 
 
-
-
 }
