@@ -44,13 +44,15 @@ public class EpideSituDisplayEntiServiceImpl implements EpideSituDisplayEntiServ
         resultJsonObject.put("errorCode", "");// 错误码4000参数为空 4001参数不正确， 4002认证失败
 
         List<SchoolPara> schoolInfo = epideSituDisplayEntiMapper.getSchoolInfo(school);
+        System.out.println(schoolInfo);
         if (schoolInfo.size() == 0 || null == schoolInfo.get(0).getProvince() || null == schoolInfo.get(0).getCity()) {
             resultJsonObject.put("errorCode", "4001");// 错误码4000参数为空 4001参数不正确， 4002认证失败
             resultJsonObject.put("MGSS", "没有学校配置信息");// 错误码4000参数为空 4001参数不正确， 4002认证失败
             return resultJsonObject;
         }
-        List<EpideSituDisplayEntity> baseInfo = epideSituDisplayEntiMapper.getBaseInfo(school,
-                schoolInfo.get(0).getProvince());
+        System.out.println(schoolInfo.get(0).getProvince());
+        String province = schoolInfo.get(0).getProvince();
+        List<EpideSituDisplayEntity> baseInfo = epideSituDisplayEntiMapper.getBaseInfo(school, province);
 
         List<EpideSituDisplayEntity> zdgcrsInfo = epideSituDisplayEntiMapper.getZdgcrsInfo(school);
         if (baseInfo.size() == 0) {

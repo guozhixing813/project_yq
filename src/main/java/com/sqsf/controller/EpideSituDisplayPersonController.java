@@ -95,7 +95,7 @@ public class EpideSituDisplayPersonController {
             @RequestParam(value = "personNo", required = false) String personNo,
             @RequestParam(value = "school", required = false) String school
     ) {
-        return epideSituDisplayPersonService.getPersonInfoDetail(school,personNo,isStudent);
+        return epideSituDisplayPersonService.getPersonInfoDetails(school,personNo,isStudent);
     }
 
     /**
@@ -118,8 +118,8 @@ public class EpideSituDisplayPersonController {
      */
     @RequestMapping(value="/sy_grxysj",method= RequestMethod.GET)
     public Object getSyGrxysj(
-            @RequestParam(value = "isStudent", required = false) String isStudent,
-            @RequestParam(value = "personNo", required = false) String personNo,
+            @RequestParam(value = "isStudent", required = true) String isStudent,
+            @RequestParam(value = "personNo", required = true) String personNo,
             @RequestParam(value = "school", required = false) String school
     ) {
         return epideSituDisplayPersonService.getSyGrxysj(school,personNo,isStudent);

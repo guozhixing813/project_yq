@@ -18,7 +18,7 @@ public class EpideSituDisplayEntiController {
 
 
     /**
-     * 有错
+     *
      * 接口1 赵晓凤：大屏最顶端信息：返校人数 外省返校人数 境外返校人数 重点观察人数
      */
     @RequestMapping(value = "/sy_baseinfo", method = RequestMethod.GET)

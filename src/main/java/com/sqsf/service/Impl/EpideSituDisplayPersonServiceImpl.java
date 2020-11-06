@@ -225,12 +225,6 @@ public class EpideSituDisplayPersonServiceImpl implements EpideSituDisplayPerson
         return null;
     }
 
-    @Override
-    public Object getpersonInfoDetail(String school, String personNo, String isStudent) {
-        return null;
-    }
-
-
     /**
      * 李婉婷  7。人员详情信息
      * @param school
@@ -238,20 +232,18 @@ public class EpideSituDisplayPersonServiceImpl implements EpideSituDisplayPerson
      * @param isStudent
      * @return
      */
-
+    @Override
+    public Object getpersonInfoDetail(String school, String personNo, String isStudent) {
+        return null;
+    }
     @Override
     public Object getpersonInfoSDetail(String school, String personNo, String isStudent) {
         return null;
     }
 
+
     @Override
     public JSONObject getPersonInfoDetails(String school, String personNo, String isStudent) {
-        return null;
-    }
-
-
-    @Override
-    public Object getPersonInfoDetail(String school, String personNo, String isStudent) {
 
         JSONObject resultJsonObject = new JSONObject();
         if(null==school ||"".equals(school)) school =DEFAULTSCHOOL;
@@ -328,8 +320,6 @@ public class EpideSituDisplayPersonServiceImpl implements EpideSituDisplayPerson
 //        logger.info("getRelationshipMap API  END");
         return resultJsonObject;
     }
-
-
 
     /**
      * 接口8、个人轨迹图

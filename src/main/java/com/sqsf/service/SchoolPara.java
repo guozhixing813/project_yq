@@ -43,5 +43,15 @@ public class SchoolPara {
     public void setCity(String city) {
         this.city = city;
     }
+
+    @Override
+    public String toString() {
+        return "SchoolPara{" +
+                "id=" + id +
+                ", school='" + school + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                '}';
+    }
 }
 
