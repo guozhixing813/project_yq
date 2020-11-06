@@ -1,6 +1,7 @@
 package com.sqsf.mapper;
 import com.sqsf.entity.EpideSituDisplayEntity;
 import com.sqsf.service.SchoolPara;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
@@ -26,7 +27,7 @@ public interface EpideSituDisplayEntiMapper {
             + " FROM (SELECT * FROM `sq_fxdata_collection` WHERE school=#{school}) a;")
     @Results({
     })
-    List<EpideSituDisplayEntity> getBaseInfo(String school, String province);
+    List<EpideSituDisplayEntity> getBaseInfo(@Param("school")String school, @Param("province")String province);
 
     @Select("select count(1) AS zdgcNum from sq_fxhealth_collection AS tmp1 WHERE school=#{school} && tmp1.heathinfo1!='00001'&& tmp1.id IN "
             + "(select SUBSTRING_INDEX(group_concat(id order by `create_time` desc),',',1) from sq_fxhealth_collection group by user_no)")
