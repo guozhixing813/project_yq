@@ -100,11 +100,11 @@ public interface EpideSituDisplayPersonMapper {
 //	        @Result(property = "name",  column = "name"),
 //	        @Result(property = "industry", column = "industry")
     })
-    List<EpideSituDisplayPersonEntity> getPersonInfoDetail(@Param("school") String school, @Param("userNo")String personNo);
+    List<EpideSituDisplayPersonEntity> getPersonInfoDetail(@Param("school") String school, @Param("userNo") String personNo);
 
     /**
      * 钱慧玲：  6、响应事件
-     * 李婉婷：  7.人员详情信息
+     *
      * @param school
      * @param personNo
      * @return
@@ -115,8 +115,8 @@ public interface EpideSituDisplayPersonMapper {
 //	        @Result(property = "industry", column = "industry")
     })
     List<EpideSituDisplayPersonEntity> getRelationPersonInfo(String school, String personNo);
+
     /**
-     *
      * @param userNo
      * @return
      */
@@ -135,43 +135,11 @@ public interface EpideSituDisplayPersonMapper {
     List<EpideSituDisplayPersonEntity> getpersonInfoDetail(String school, String personNo);
 
     List<EpideSituDisplayPersonEntity> getpersonInfoSDetail(String school, String personNo);
+
     @Select("SELECT create_time AS timestamp FROM `sq_fxhealth_collection` WHERE school =#{school} AND user_no=#{userNo} and heathinfo1!='00001';")
     @Results({
     })
-    List<EpideSituDisplayPersonEntity> getPersonInfoSDetail(String school,String userNo);
-
-
-
-
-    /**
-     * 李婉婷  接口8.个人轨迹图
-     *
-     * @param school
-     * @return
-     */
-    @Select("SELECT center_longitude AS centerLongitude,center_dimension AS centerDimension"
-            + " FROM `sq_school_configure` WHERE school=#{school};")
-    @Results({
-    })
-    List<EpideSituDisplayPersonEntity> getSyGrgjt(String school);
-
-    @Select("SELECT addr, longitude AS longitude ,dimension AS dimension,time FROM `sq_wxgj_collection` "
-            + "WHERE school=#{school} and user_no=#{personNo} limit 20;")
-    @Results({
-    })
-    List<EpideSituDisplayPersonEntity> getSyGrgjtLD(String school, String personNo);
-
-    /**
-     * 李婉婷  接口9.个人相应事件
-     * @param personNo
-     * @param school
-     * @return
-     */
-    @Select("SELECT user_name AS userName ,user_no AS userNo, addr,time FROM `sq_wxgj_collection` WHERE school=#{school} and user_no=#{personNo};")
-    @Results({
-    })
-    List<EpideSituDisplayPersonEntity> getSyGrxysj(String school,String personNo,String isStudent);
-
+    List<EpideSituDisplayPersonEntity> getPersonInfoSDetail(String school, String userNo);
 
 
 }
