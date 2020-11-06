@@ -133,7 +133,7 @@ public interface EpideSituDisplayPersonMapper {
 //	        @Result(property = "name",  column = "name"),
 //	        @Result(property = "industry", column = "industry")
     })
-    List<EpideSituDisplayPersonEntity> getpersonInfoDetail(String school,String userNo);
+    List<EpideSituDisplayPersonEntity> getpersonInfoDetail(@Param("school") String school,@Param("userNo") String userNo);
 
 
 
@@ -147,7 +147,7 @@ public interface EpideSituDisplayPersonMapper {
 //	        @Result(property = "name",  column = "name"),
 //	        @Result(property = "industry", column = "industry")
     })
-    List<EpideSituDisplayPersonEntity> getpersonInfoSDetail(String school,String userNo);
+    List<EpideSituDisplayPersonEntity> getpersonInfoSDetail(@Param("school") String school,@Param("userNo")String userNo);
 
 
     /**
@@ -160,7 +160,7 @@ public interface EpideSituDisplayPersonMapper {
             + " FROM `sq_school_configure` WHERE school=#{school};")
     @Results({
     })
-    List<EpideSituDisplayPersonEntity> getSyGrgjt(String school);
+    List<EpideSituDisplayPersonEntity> getSyGrgjt(@Param("school") String school);
 
     /**
      * 李婉婷  接口8.个人轨迹图
@@ -172,7 +172,7 @@ public interface EpideSituDisplayPersonMapper {
             + "WHERE school=#{school} and user_no=#{personNo} limit 20;")
     @Results({
     })
-    List<EpideSituDisplayPersonEntity> getSyGrgjtLD(String school, String personNo);
+    List<EpideSituDisplayPersonEntity> getSyGrgjtLD(@Param("school") String school, @Param("personNo") String personNo);
 
     /**
      * 李婉婷  接口9.个人相应事件
@@ -183,7 +183,7 @@ public interface EpideSituDisplayPersonMapper {
     @Select("SELECT user_name AS userName ,user_no AS userNo, addr,time FROM `sq_wxgj_collection` WHERE school=#{school} and user_no=#{personNo};")
     @Results({
     })
-    List<EpideSituDisplayPersonEntity> getSyGrxysj(String school,String personNo,String isStudent);
+    List<EpideSituDisplayPersonEntity> getSyGrxysj(@Param("school")String school,@Param("personNo")String personNo,@Param("isStudent")String isStudent);
 
 
 

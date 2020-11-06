@@ -55,7 +55,7 @@ public interface EpideSituDisplayPersonService{
     JSONObject getSyGrgjt(String school, String personNo, String isStudent);
 
     /**
-     * 李婉婷   9。个人相应事件
+     * 李婉婷   9 个人相应事件
      * @param school
      * @param personNo
      * @param isStudent
