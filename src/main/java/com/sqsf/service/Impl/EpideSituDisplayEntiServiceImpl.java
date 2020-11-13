@@ -13,12 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -329,6 +331,153 @@ public class EpideSituDisplayEntiServiceImpl implements EpideSituDisplayEntiServ
         syinfoArrayObject.add(Object5);
 
         resultJsonObject.put("result", syinfoArrayObject);
+        return resultJsonObject;
+    }
+
+    /**
+     * 孙心茹：接口8 返校人员来源：学校gps（百度地图）
+     */
+    @Override
+    public JSONObject getSyFxrylyinfo(String school) {
+//        logger.info("sy_rmlyinfo API START AND PARA isStudent IS NULL");
+        JSONObject resultJsonObject = new JSONObject();
+        resultJsonObject.put("errorCode", "");// 错误码4000参数为空 4001参数不正确， 4002认证失败
+        if (null == school || "".equals(school))
+            school = DEFAULTSCHOOL;
+
+        List<EpideSituDisplayEntity> epideSituInfoList = epideSituDisplayEntiMapper.getSyXyryfbinfo(school);
+        if (epideSituInfoList.size() == 0) {
+            resultJsonObject.put("errorCode", "4001");// 错误码4000参数为空 4001参数不正确， 4002认证失败
+            resultJsonObject.put("MGSS", "没有学校配置信息");// 错误码4000参数为空 4001参数不正确， 4002认证失败
+            return resultJsonObject;
+        }
+
+        Double[] center = new Double[] { Double.parseDouble(epideSituInfoList.get(0).getCenterLongitude().toString()),
+                Double.parseDouble(epideSituInfoList.get(0).getCenterDimension()) };
+        epideSituInfoList.get(0).getCenterLongitude();
+        epideSituInfoList.get(0).getCenterDimension();
+
+        List<EpideSituDisplayEntity> syinfo = epideSituDisplayEntiMapper.getSyFxrylyinfo(school);
+
+        JSONArray syinfoArrayObject = new JSONArray();
+        for (EpideSituDisplayEntity syinfoValue : syinfo) {
+
+            JSONObject Object = new JSONObject();
+            Object.put("name", syinfoValue.getOriginCity());
+            String originCity = syinfoValue.getOriginCity();
+
+            if (null == syinfoValue.getLongitude() || null == syinfoValue.getDimension()) {
+
+                RestTemplate restTemplate = new RestTemplate();
+                String URL = "http://api.map.baidu.com/geocoder?address=%E5%9F%8E%E5%B8%82%E5%90%8D%E7%A7%B0"
+                        + "&output=json&key=37492c0ee6f924cb5e934fa08c6b1676&city=" + originCity;
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+                HttpEntity<String> entity = new HttpEntity<String>(headers);
+                String strbody = restTemplate.exchange(URL, HttpMethod.GET, entity, String.class).getBody();
+                JSONObject apiResult = JSONObject.parseObject(strbody);
+                if (null != apiResult.getJSONObject("result")) {
+                    JSONObject location = apiResult.getJSONObject("result").getJSONObject("location");
+                    Double[] gps = new Double[] { location.getDouble("lng"), location.getDouble("lat") };
+                    epideSituDisplayEntiMapper.insertgps(originCity, location.getDouble("lng"),
+                            location.getDouble("lat"));
+                    Object.put("gps", gps);
+                }
+                ;
+                Object.put("value", syinfoValue.getCount());
+                syinfoArrayObject.add(Object);
+
+            } else {
+
+                Double[] gps = new Double[] { syinfoValue.getLongitude(), syinfoValue.getDimension() };
+                Object.put("gps", gps);
+                Object.put("value", syinfoValue.getCount());
+                syinfoArrayObject.add(Object);
+            }
+        }
+
+        JSONObject result = new JSONObject();
+        result.put("center", center);
+        result.put("from", syinfoArrayObject);
+        result.put("school", school);
+        resultJsonObject.put("result", result);
+
+//        logger.info("sy_rmlyinfo API  END");
+        return resultJsonObject;
+    }
+
+    /**
+     * 孙心茹：接口9、疫情动态接口
+     * @param school
+     * @return
+     */
+    @Override
+    public JSONObject getSyYqdtinfo(String school) {
+        JSONObject resultJsonObject = new JSONObject();
+        resultJsonObject.put("errorCode", "");// 错误码4000参数为空 4001参数不正确， 4002认证失败
+        if (null == school || "".equals(school))
+            school = DEFAULTSCHOOL;
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("authoration", "apicode");
+        headers.add("apicode", "65f2157f4fff4426b83519770ec5bd9b");
+
+//		//解决转发问题
+        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+        HttpClient httpClient = HttpClientBuilder.create().setRedirectStrategy(new LaxRedirectStrategy()).build();
+
+        factory.setHttpClient(httpClient);
+        restTemplate.setRequestFactory(factory);
+        HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity(null, headers);
+        UriComponentsBuilder builder = UriComponentsBuilder
+                .fromHttpUrl("https://api.yonyoucloud.com/apis/dst/ncov/query");
+        String resEntity = restTemplate.exchange(builder.build().toString(), HttpMethod.GET, request, String.class)
+                .getBody();
+        JSONObject jsonResult = JSONObject.parseObject(resEntity);
+        if (!"200".equals(jsonResult.getString("code"))) {
+            resultJsonObject.put("errorCode", "4000");
+            return resultJsonObject;
+        }
+
+        List<String> result = new ArrayList<>();
+        JSONArray newsList = jsonResult.getJSONArray("newslist");
+        JSONArray newList = newsList.getJSONObject(0).getJSONArray("news");
+        for (int i = 0; i < newList.size(); i++) {
+            String summary = newList.getJSONObject(i).getString("summary");
+            result.add(summary);
+//            logger.info("-------------------" + newList.get(i));
+        }
+
+        resultJsonObject.put("result", result);
+
+//        logger.info("sy_ejxyfxinfo API  END");
+        return resultJsonObject;
+    }
+
+    @Override
+    public JSONObject getSyEjxyfxinfo(String school) {
+        JSONObject resultJsonObject = new JSONObject();
+        resultJsonObject.put("errorCode", "");// 错误码4000参数为空 4001参数不正确， 4002认证失败
+        if (null == school || "".equals(school))
+            school = DEFAULTSCHOOL;
+
+        List<EpideSituDisplayEntity> syinfo = epideSituDisplayEntiMapper.getSyEjxyfxinfo(school);
+//		if(baseInfo.size()==0) {
+//			resultJsonObject.put("errorCode", "4000");//错误码4000参数为空 4001参数不正确， 4002认证失败
+//			return resultJsonObject;
+//		}
+        JSONArray syinfoArrayObject = new JSONArray();
+        for (EpideSituDisplayEntity syinfoValue : syinfo) {
+            JSONObject Object = new JSONObject();
+            Object.put("name", syinfoValue.getName());
+            Object.put("value", syinfoValue.getCount());
+            syinfoArrayObject.add(Object);
+        }
+
+        resultJsonObject.put("result", syinfoArrayObject);
+
+//        logger.info("sy_ejxyfxinfo API  END");
         return resultJsonObject;
     }
 

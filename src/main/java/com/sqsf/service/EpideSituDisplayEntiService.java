@@ -30,5 +30,14 @@ public interface EpideSituDisplayEntiService {
 
     JSONObject getSyFxjtinfo(String school);
 
+    /**
+     * 孙心茹
+     * @param school
+     * @return
+     */
+    JSONObject getSyFxrylyinfo(String school);
 
+    JSONObject getSyYqdtinfo(String school);
+
+    JSONObject getSyEjxyfxinfo(String school);
 }

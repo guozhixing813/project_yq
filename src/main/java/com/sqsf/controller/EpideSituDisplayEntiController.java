@@ -87,9 +87,38 @@ public class EpideSituDisplayEntiController {
         return epideSituDisplayEntiService.getSyFxjtinfo(school);
     }
 
+    /**
+     * 孙心茹：接口8 返校人员来源：学校gps（百度地图）
+     *
+     * @return
+     */
+    @RequestMapping(value = "/sy_fxrylyinfo", method = RequestMethod.GET)
+    public Object getSyFxrylyinfo(@RequestParam(value = "school", required = false) String school) {
 
+        return epideSituDisplayEntiService.getSyFxrylyinfo(school);
+    }
 
+    /**
+     * 孙心茹：接口9、疫情动态接口
+     *
+     * @return
+     */
+    @RequestMapping(value = "/sy_yqdtinfo", method = RequestMethod.GET)
+    public Object getSyYqdtinfo(@RequestParam(value = "school", required = false) String school) {
 
+        return epideSituDisplayEntiService.getSyYqdtinfo(school);
+    }
+
+    /**
+     * 孙心茹：接口10、各个学院返校信息：
+     *
+     * @return
+     */
+    @RequestMapping(value = "/sy_ejxyfxinfo", method = RequestMethod.GET)
+    public Object getSyEjxyfxinfo(@RequestParam(value = "school", required = false) String school) {
+
+        return epideSituDisplayEntiService.getSyEjxyfxinfo(school);
+    }
 
 
 }
