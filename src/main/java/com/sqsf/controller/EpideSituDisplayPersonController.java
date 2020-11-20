@@ -105,8 +105,8 @@ public class EpideSituDisplayPersonController {
      */
     @RequestMapping(value="/syrelationship",method= RequestMethod.GET)
     public Object getSySelationship (
-            @RequestParam(value = "isStudent", required = true) String isStudent,
-            @RequestParam(value = "personNo", required = true) String personNo,
+            @RequestParam(value = "isStudent", required = false) String isStudent,
+            @RequestParam(value = "personNo", required = false) String personNo,
             @RequestParam(value = "school", required = false) String school
     ) {
         return epideSituDisplayPersonService.getSySelationship(school,personNo);
